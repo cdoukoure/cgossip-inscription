@@ -9,10 +9,10 @@ import { MapsComponent } from '@shared/maps/maps.component';
 import { NotificationsComponent } from '@shared/notifications/notifications.component';
 import { UpgradeComponent } from '@app/administration/upgrade/upgrade.component';
 
-import { UsersModule } from '@app/administration/users/users.module';
+// import { UsersModule } from '@app/administration/users/users.module';
 
 
-export const AdminLayoutRoutes: Routes = [
+export const AdministrationRoutes: Routes = [
     // {
     //   path: '',
     //   children: [ {

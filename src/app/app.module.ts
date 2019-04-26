@@ -46,16 +46,28 @@ import {
   AgmCoreModule
 } from '@agm/core';
 
+// Public layout
+import { WebsiteTopNavComponent } from '@shared/layout/website/website-top-nav/website-top-nav.component';
+import { WebsiteFooterComponent } from '@shared/layout/website/website-footer/website-footer.component';
+import { WebsiteLayoutComponent } from '@shared/layout/website/website-layout/website-layout.component';
+import { PageContentComponent } from '@shared/layout/page-content/page-content.component';
 
-import { WebsiteTopNavComponent } from './shared/layout/website/website-top-nav/website-top-nav.component';
-import { WebsiteFooterComponent } from './shared/layout/website/website-footer/website-footer.component';
-import { WebsiteLayoutComponent } from './shared/layout/website/website-layout/website-layout.component';
-import { AdminLayoutComponent } from './administration/admin-layout/admin-layout.component';
+// Private layout
+import { 
+  CreativetimFooterComponent as CreativeTimAngularAdminFooter 
+} from '@shared/layout/creativetim-theme/creativetim-footer/creativetim-footer.component';
+import { 
+  CreativetimNavbarComponent as CreativeTimAngularAdminNavbar 
+} from '@shared/layout/creativetim-theme/creativetim-navbar/creativetim-navbar.component';
+import { 
+  CreativetimSidebarComponent as CreativeTimAngularAdminSidebar 
+} from '@shared/layout/creativetim-theme/creativetim-sidebar/creativetim-sidebar.component';
+import { 
+  AdminLayoutComponent as CreativeTimAngularAdminLayout 
+} from '@shared/layout/creativetim-theme/admin-layout/admin-layout.component';
 
+// Public page
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { PageContentComponent } from './shared/layout/page-content/page-content.component';
-
-// import { fakeBackendProvider } from '@shared/interceptors';
 
 import { environment } from '../environments/environment';
 import { TranslationService } from './shared/translation/translation.service';
@@ -107,7 +119,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       customClass: 'modal-content',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn'
-    }),    // App custom dependencies
+    }), // App custom dependencies
+
     HttpServiceModule.forRoot(),
     UtilityModule.forRoot(),
 
@@ -128,12 +141,19 @@ export function HttpLoaderFactory(http: HttpClient) {
  ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
-    PageContentComponent,
+
+    CreativeTimAngularAdminFooter,
+    CreativeTimAngularAdminNavbar,
+    CreativeTimAngularAdminSidebar,
+    CreativeTimAngularAdminLayout,
+
     WebsiteTopNavComponent,
     WebsiteFooterComponent,
     WebsiteLayoutComponent,
     LandingPageComponent,
+
+    PageContentComponent,
+
     TextareaAutoHeightDirective,
     DateTimePickerDirective,
   ],
@@ -161,6 +181,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  // enableProdMode()
-}
+export class AppModule { }

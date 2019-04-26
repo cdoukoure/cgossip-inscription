@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FooterComponent } from './footer.component';
+import { CreativetimSidebarComponent } from './creativetim-sidebar.component';
 
-describe('FooterComponent', () => {
-  let component: FooterComponent;
-  let fixture: ComponentFixture<FooterComponent>;
+describe('CreativetimSidebarComponent', () => {
+  let component: CreativetimSidebarComponent;
+  let fixture: ComponentFixture<CreativetimSidebarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FooterComponent ]
+      declarations: [ CreativetimSidebarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FooterComponent);
+    fixture = TestBed.createComponent(CreativetimSidebarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

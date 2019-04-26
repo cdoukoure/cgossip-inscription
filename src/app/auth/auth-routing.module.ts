@@ -41,7 +41,7 @@ import {
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 import { WebsiteLayoutComponent } from '@shared/layout/website/website-layout/website-layout.component';
-import { AdminLayoutComponent } from '@app/administration/admin-layout/admin-layout.component';
+import { AdminLayoutComponent as CreativeTimAngularAdminLayout } from '@shared/layout/creativetim-theme/admin-layout/admin-layout.component';
 
 // Module feature components
 import { LoginComponent } from './login/login.component'
@@ -78,7 +78,7 @@ const routes: Routes = [
   {
     path: 'user-panel',
     pathMatch: 'prefix',
-    component: AdminLayoutComponent,
+    component: CreativeTimAngularAdminLayout,
     canActivate: [
       AuthGuard
     ],

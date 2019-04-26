@@ -7,14 +7,16 @@ import { AuthModule }  from './auth/auth.module'
 
 
 // Layouts 
-import { AdminLayoutComponent } from './administration/admin-layout/admin-layout.component';
-import { WebsiteLayoutComponent } from '@shared/layout/website/website-layout/website-layout.component';
+import { 
+  AdminLayoutComponent as CreativeTimAngularAdminLayout 
+} from '@shared/layout/creativetim-theme/admin-layout/admin-layout.component';
+
+// import { WebsiteLayoutComponent } from '@shared/layout/website/website-layout/website-layout.component';
 
 // Website Pages
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+// import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+
 import { AuthGuard } from './shared/guards/auth.guard';
-
-
 
 const routes: Routes =[
   /*{
@@ -37,14 +39,14 @@ const routes: Routes =[
   {
     path: 'admin-panel',
     pathMatch: 'prefix',
-    component: AdminLayoutComponent,
+    component: CreativeTimAngularAdminLayout,
     canActivate: [
       AuthGuard
     ],
     children: [
       {
         path: '',
-        loadChildren: './administration/admin-layout/admin-layout.module#AdminLayoutModule'
+        loadChildren: './administration/administration.module#AdministrationModule'
       }
     ]
   }, 
@@ -58,15 +60,15 @@ const routes: Routes =[
   //   redirectTo: 'login',
   //   pathMatch: 'full'
   // }
-    // { path: 'dashboard',      component: DashboardComponent },
-    // { path: 'user-profile',   component: UserProfileComponent },
-    // { path: 'table-list',     component: TableListComponent },
-    // { path: 'typography',     component: TypographyComponent },
-    // { path: 'icons',          component: IconsComponent },
-    // { path: 'maps',           component: MapsComponent },
-    // { path: 'notifications',  component: NotificationsComponent },
-    // { path: 'upgrade',        component: UpgradeComponent },
-    // { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }
+  // { path: 'dashboard',      component: DashboardComponent },
+  // { path: 'user-profile',   component: UserProfileComponent },
+  // { path: 'table-list',     component: TableListComponent },
+  // { path: 'typography',     component: TypographyComponent },
+  // { path: 'icons',          component: IconsComponent },
+  // { path: 'maps',           component: MapsComponent },
+  // { path: 'notifications',  component: NotificationsComponent },
+  // { path: 'upgrade',        component: UpgradeComponent },
+  // { path: '',               redirectTo: 'dashboard', pathMatch: 'full' }
 ];
 
 @NgModule({

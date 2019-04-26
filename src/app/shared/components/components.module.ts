@@ -25,11 +25,6 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 import { CustomRouterStateSerializer } from '../store/utils/router-utils';
 
-
-
-import { FooterComponent } from './footer/footer.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
 import { PostCardComponent } from './post-card/post-card.component';
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { PostCommentComponent } from './post-comment/post-comment.component';
@@ -59,9 +54,6 @@ import { AdvancedTableComponent } from './advanced-table/advanced-table.componen
     SweetAlert2Module,
   ],
   declarations: [
-    FooterComponent,
-    NavbarComponent,
-    SidebarComponent,
     PostCardComponent,
     SvgIconComponent,
     PostCommentComponent,
@@ -72,9 +64,6 @@ import { AdvancedTableComponent } from './advanced-table/advanced-table.componen
     PostCardComponent,
     PostCommentComponent,
     PostCommentListComponent,
-    FooterComponent,
-    NavbarComponent,
-    SidebarComponent,
   ]
 })
 export class ComponentsModule {

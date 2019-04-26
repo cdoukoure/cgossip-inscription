@@ -23,11 +23,11 @@ export const ROUTES: RouteInfo[] = [
 ];
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  selector: 'app-creativetim-sidebar',
+  templateUrl: './creativetim-sidebar.component.html',
+  styleUrls: ['./creativetim-sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class CreativetimSidebarComponent implements OnInit {
   menuItems: any[];
 
   constructor(

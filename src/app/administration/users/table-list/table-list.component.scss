@@ -1,0 +1,19 @@
+.table td,
+.table > tbody > tr > td {
+    padding: 2px ; 
+}
+.size-2 { width: 2em; height: 2em }
+.size-3 { width: 3em; height: 3em }
+.size-4 { width: 4em; height: 4em }
+.size-6 { width: 6em; height: 6em }
+.size-8 { width: 8em; height: 8em }
+.size-10 { width: 10em; height: 10em }
+
+.mat-button {
+    padding: .1rem 1.25rem!important;
+    margin-right: .7rem;
+
+    &.active {
+        border-radius: 20px 20px 0 0;
+    }
+}

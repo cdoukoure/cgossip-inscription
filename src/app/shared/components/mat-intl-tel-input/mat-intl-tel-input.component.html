@@ -1,0 +1,28 @@
+<div [formGroup]="parts" class="intl-tel-input allow-dropdown">
+    <!-- <div class="flag-container" dropdown [ngClass]="{'disabled': disabled}">
+      <div class="selected-flag dropdown-toggle" dropdownToggle>
+        <div class="iti-flag" [ngClass]="selectedCountry.flagClass"></div>
+        <div class="iti-arrow"></div>
+      </div>
+      <ul class="country-list dropdown-menu" *dropdownMenu>
+        <li class="country" *ngFor="let country of allCountries" (click)="onCountrySelect(country, focusable)">
+          <div class="flag-box">
+            <div class="iti-flag" [ngClass]="country.flagClass"></div>
+          </div>
+          <span class="country-name">{{country.name}}</span>
+          <span class="dial-code">+{{country.dialCode}}</span>
+        </li>
+      </ul>
+    </div> -->
+    <mat-select formControlName="area" class="flag-size"
+      aria-label="Area code" (input)="_handleInput()"
+      panelClass="country-panel">
+      <mat-option></mat-option>
+      <mat-option class="country" *ngFor="let country of allCountries" [value]="+country.dialCode">
+          <span class="flag-icon flag-icon-{{country.flagClass}}"></span>
+          <span class="dial-code">{{country.placeHolder}}</span>
+      </mat-option>
+    </mat-select>
+    <span class="example-tel-input-spacer">&ndash;</span>
+    <input class="example-tel-input-element" formControlName="subscriber" aria-label="Subscriber number" (input)="_handleInput()">
+</div>

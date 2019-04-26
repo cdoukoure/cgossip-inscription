@@ -1,0 +1,11 @@
+<div [formGroup]="parts" class="example-tel-input-container">
+    <mat-select formControlName="area" size="3" 
+      aria-label="Area code" (input)="_handleInput()">
+      <mat-option>--</mat-option>
+      <!-- <mat-option *ngFor="let group of sandBox.allGroups$ | async" [value]="group.id">
+        {{group.name}}
+      </mat-option> -->
+    </mat-select>
+    <span class="example-tel-input-spacer">&ndash;</span>
+    <input class="example-tel-input-element" formControlName="subscriber" size="4" aria-label="Subscriber number" (input)="_handleInput()">
+</div>

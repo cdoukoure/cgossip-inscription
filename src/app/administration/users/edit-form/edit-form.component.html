@@ -1,0 +1,191 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Compte utilisateur</h4>
+                        <p class="card-category">Créer ou modifier un compte utilisateur</p>
+                    </div>
+                    <div class="card-body">
+                        <form [ngrxFormState]="sandBox.formState$ | async">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field [floatLabel]="true">
+                                        <mat-label>Pays</mat-label>
+                                        <mat-select
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.country"
+                                            (selectionChange)="onFormControlChange('country', $event)">
+                                            <mat-option>--</mat-option>
+                                            <mat-option *ngFor="let country of sandBox.allCountries"
+                                                [value]="country.iso2">
+                                                {{country.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <!-- <div class="mat-form-field-wrapper">
+                                        <label style="font-size:11px;display:block;margin-bottom: 0px;">Pseudo</label>
+                                        <ngx-intl-tel-input
+                                            matInput
+                                            [cssClass]="'mat-input-element'"
+                                            [preferredCountries]="['ci', 'gh']"
+                                            [enableAutoCountrySelect]="true"
+                                            [enablePlaceholder]="true"
+                                            [formControl]="myForm.controls['phone']"
+                                            (change)="onFormControlChange('phone', $event)"
+                                            >
+                                        </ngx-intl-tel-input>    
+                                        </div>  -->
+
+                                    <!--
+                                            <mat-intl-tel-input
+                                            (change)="onFormControlChange('phone', $event)"
+                                            ></mat-intl-tel-input>
+                                            -->
+
+                                    <mat-form-field [floatLabel]="true" *ngIf="(sandBox.viewMode$ | async) === 'creation'">
+                                        <mat-label>N° Mobile</mat-label>
+                                        <input matInput placeholder="{{placeHolder}}" type="text"
+                                            class="example-right-align" [ngrxFormControlState]="(sandBox.formState$ | async)
+                                                    .controls.phone" autocomplete="off" >
+                                        <span matPrefix>
+                                            <span class="flag-icon flag-icon-{{ flagClass }}"></span>
+                                            +{{ dialCode }}&nbsp;
+                                        </span>
+                                    </mat-form-field>
+
+                                    <mat-form-field [floatLabel]="true" *ngIf="(sandBox.viewMode$ | async) === 'update'">
+                                        <mat-label>N° Mobile</mat-label>
+                                        <input matInput placeholder="{{placeHolder}}" type="text"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.phone"
+                                            class="example-right-align" autocomplete="off">
+                                        <span matPrefix>
+                                            <span class="flag-icon flag-icon-{{ flagClass }}"></span>
+                                            +
+                                        </span>
+                                    </mat-form-field>
+
+
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field [floatLabel]="true">
+                                        <input matInput type="text" placeholder="Nom"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.lastname"
+                                            autocomplete="off" />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field [floatLabel]="true">
+                                        <input matInput type="text" placeholder="Prénom"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.firstname"
+                                            autocomplete="off" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <mat-form-field [floatLabel]="true">
+                                        <mat-label>Rôle de l'utilisateur</mat-label>
+                                        <mat-select
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.groups"
+                                            multiple>
+                                            <mat-option>--</mat-option>
+                                            <mat-option *ngFor="let group of sandBox.allGroups$ | async"
+                                                [value]="group.id">
+                                                {{group.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <!-- <input matInput type="text"  id="country"
+                                                    [ngrxFormControlState]="(sandBox.formState$ | async).controls.country" 
+                                                        placeholder="Pays"
+                                                /> -->
+                                    <!-- <mat-country-select placeholder="Pays" 
+                                                    [formControl]="myForm.controls['country']"
+                                                    (change)="onFormControlChange('country', $event)"></mat-country-select> -->
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />&nbsp;
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="sandBox.isLoading$ | async">
+                                <div class="col-md-12">
+                                    <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                                    </mat-progress-bar>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button *ngIf="(sandBox.viewMode$ | async) === 'update'" mat-raised-button
+                                        type="button" matTooltip="Supprimer" [matTooltipPosition]="'above'" [swal]="{title: 'Suppression', 
+                                            text: 'Êtes-vous sûr de vouloir supprimer cet utilisateur?',
+                                            width: 400,
+                                            showCloseButton: true,
+                                            showCancelButton: true,
+                                            focusConfirm: false,
+                                            confirmButtonText:'Oui, continuez!',
+                                            confirmButtonAriaLabel: 'Oui, continuez!',
+                                            confirmButtonClass: 'btn btn-danger btn-sm',
+                                            cancelButtonText:'Annuler',
+                                            cancelButtonAriaLabel: 'Annuler',
+                                            cancelButtonClass: 'btn btn-default btn-sm',
+                                            allowEnterKey: false}" (confirm)="onConfirmDeleteDialog($event)"
+                                        (cancel)="handleRefusalToSetEmail($event)"
+                                        class="btn btn-danger btn-round btn-just-icon">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+
+                                    <button *ngIf="(sandBox.viewMode$ | async) === 'update'" mat-raised-button
+                                        type="button" matTooltip="Générer un nouveau mot de passe pour l'utilisateur"
+                                        [matTooltipPosition]="'above'" [swal]="{title: 'Mot de passe ', 
+                                            text: 'Êtes-vous sûr de vouloir générer un nouveau mot de passe pour cet utilisateur?',
+                                            width: 400,
+                                            showCloseButton: true,
+                                            showCancelButton: true,
+                                            focusConfirm: false,
+                                            confirmButtonText:'Oui, continuez!',
+                                            confirmButtonAriaLabel: 'Oui, continuez!',
+                                            confirmButtonClass: 'btn btn-danger btn-sm',
+                                            cancelButtonText:'Annuler',
+                                            cancelButtonAriaLabel: 'Annuler',
+                                            cancelButtonClass: 'btn btn-default btn-sm',
+                                            allowEnterKey: false}" (confirm)="onConfirmGenerateDialog($event)"
+                                        class="btn btn-warning btn-round">
+                                        Réinitialiser son mot de passe
+                                    </button>
+
+                                    <button *ngIf="(sandBox.viewMode$ | async) === 'creation'" mat-raised-button
+                                        class="btn btn-success pull-right" (click)="onSubmit($event, 'create')">
+                                        Envoyer
+                                    </button>
+
+                                    <button *ngIf="(sandBox.viewMode$ | async) === 'update'" mat-raised-button
+                                        class="btn btn-success pull-right" (click)="onSubmit($event, 'update')">
+                                        Enregistrer
+                                    </button>
+
+                                    <button mat-raised-button type="button" class="btn btn-warning pull-right"
+                                        (click)="onReset()">
+                                        Retour
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

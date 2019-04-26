@@ -1,0 +1,112 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 offset-lg-4">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Profil</h4>
+                        <p class="card-category">Modifier les informations de mon profil</p>
+                    </div>
+                    <div class="card-body">
+                        <form novalidate [ngrxFormState]="sandBox.profilFormState$ | async">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <img width="150" height="150" style="display: block;margin:5px auto;"
+                                        *ngIf="!(sandBox.profilFormState$ | async).value.avatar || (sandBox.profilFormState$ | async).value.avatar ===''"
+                                        [src]="(sandBox.profilFormState$ | async).value.avatarOri" />
+                                    <img width="150" height="150" style="display: block;margin:5px auto;"
+                                        *ngIf="(sandBox.profilFormState$ | async).value.avatar && (sandBox.profilFormState$ | async).value.avatar !==''"
+                                        [src]="photo" />
+                                    <label class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">find_in_page</i>Selectionner une image
+                                        <input #fileInput type="file" accept="image/*" (change)="onFileChange($event)"
+                                            [ngrxFormControlState]="(sandBox.profilFormState$ | async).controls.avatar"
+                                            hidden />
+                                    </label>
+                                    <button (click)="clearAvatarUrl()"
+                                        *ngIf="(sandBox.profilFormState$ | async).value.avatar && (sandBox.profilFormState$ | async).value.avatar !== ''"
+                                        class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">close</i>
+                                        Retirer l'image
+                                    </button>
+                                    <!-- <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-new thumbnail img-circle img-raised" style="width: 200px; height: 200px;">
+                                            <img [src]="(sandBox.profilFormState$ | async ).value.avatar" width="200px" height="150px" alt="...">
+                                        </div>
+                                        <div class="fileinput-preview fileinput-exists thumbnail img-circle img-raised"
+                                            style="width: 200px; height: 200px;">
+                                        </div>
+                                        <div>
+                                            <span class="btn btn-raised btn-link btn-rose btn-file btn-sm">
+                                                <span class="fileinput-new">Modifier la photo</span>
+                                                <span class="fileinput-exists"><i class="material-icons">edit</i></span>
+                                                <input type="file" 
+                                                    [ngrxFormControlState]="(sandBox.profilFormState$ | async).controls.avatar64"/>
+                                            </span>
+                                            <a href="#pablo" class="btn btn-danger btn-link  btn-sm fileinput-exists" data-dismiss="fileinput">
+                                                <i class="material-icons">close</i>
+                                            </a>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text"
+                                            [ngrxFormControlState]="(sandBox.profilFormState$ | async).controls.firstname"
+                                            placeholder="Prénom" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text"
+                                            [ngrxFormControlState]="(sandBox.profilFormState$ | async).controls.lastname"
+                                            placeholder="Nom" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="text"
+                                            [ngrxFormControlState]="(sandBox.profilFormState$ | async).controls.pseudo"
+                                            placeholder="Pseudo" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br />
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-6">
+                                    <button mat-raised-button type="submit" class="btn btn-rose btn-block"
+                                        (click)="onSubmit($event)">
+                                        Enregistrer
+                                    </button>
+                                </div>
+                                <div class="col-md-12 col-lg-6">
+                                    <button mat-raised-button type="button" class="btn btn-default btn-block"
+                                        (click)="onCancel()">
+                                        Retour
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="sandBox.isLoading$ | async">
+                                <div class="col-md-12" style="height: 20px;">
+                                    <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                                    </mat-progress-bar>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

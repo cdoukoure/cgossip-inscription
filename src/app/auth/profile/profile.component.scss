@@ -1,0 +1,18 @@
+.mh-px-100 { max-width: 100px; max-height: 100px;}
+
+
+::ng-deep .fileinput-preview img {
+  max-width: 200px!important;
+  max-height: 200px!important;
+}
+
+/* NGX IMG style */
+
+::ng-deep .ngx-img-crop-wrapper {
+  height: 150px!important;
+}
+
+::ng-deep .ngx-img-wrapper {
+    height: 150px!important;
+}
+

@@ -1,0 +1,19 @@
+
+.validated {
+  border-top: 3px solid #4caf50;
+}
+.refused {
+  border-top: 3px solid #f44336;
+}
+.waiting {
+  border-top: 3px solid #00bcd4;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+textarea {
+  overflow: hidden!important;
+  resize: vertical;
+}

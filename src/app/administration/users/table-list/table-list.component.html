@@ -1,0 +1,436 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header  card-header-icon card-header-rose">
+            <div class="card-icon">
+              <i class="material-icons">people</i>
+            </div>
+            <h4 class="card-title">Gerer les utilisateurs</h4>
+            <br />
+            <div class="row">
+              <div class="col-lg-10">
+            <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+                <!-- <span class="nav-tabs-title">Tasks:</span> -->
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <li class="nav-item">
+                    <a mat-button class="btn btn-sm btn-round btn-info active" href="#fan" data-toggle="tab">
+                      <i class="material-icons">people</i> Fans
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a mat-button class="btn btn-sm btn-round btn-success" href="#celebrity" data-toggle="tab">
+                      <i class="material-icons">face</i> Célébrités
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a mat-button class="btn btn-sm btn-round btn-warning" href="#moderator" data-toggle="tab">
+                      <i class="material-icons">security</i> Modérators
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a mat-button class="btn btn-sm btn-round btn-danger" href="#admin" data-toggle="tab">
+                      <i class="material-icons">security</i> Administrateurs
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                </ul>
+          </div>
+            </div>
+            </div>
+            <div class="col-lg-2">
+                <button mat-raised-button
+                type="button" matTooltip="Créer un nouvel utilisateur" [matTooltipPosition]="'left'"
+                (click)="onNew()" class="btn btn-primary btn-round btn-just-icon pull-right">
+                    <i class="material-icons">add</i>
+                </button>
+  
+            </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="tab-content">
+              <div class="tab-pane active" id="fan" style="border: 1px solid #00AEC5; border-radius: 6px;; padding:5px;">
+                <table class="table" #matSortFan="matSort" matSort (matSortChange)="$event">
+                  <thead class="text-info">
+                    <th>
+                      Avatar
+                    </th>
+                    <!-- <th mat-sort-header="country">{{ 'Pays' }}</th> -->
+                    <th mat-sort-header="phone">{{ 'N° Mobile' }}</th>
+                    <th mat-sort-header="pseudo">{{ 'Pseudo' }}</th>
+                    <th mat-sort-header="lastname">{{ 'Nom' }}</th>
+                    <th mat-sort-header="firstname">{{ 'Prenom' }}</th>
+                    <!-- <th mat-sort-header="groups">{{ 'Role' }}</th> -->
+                    <th>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let user of sandBox.fanItems$ | async | slice:pindexFan * psizeFan:(pindexFan + 1)*psizeFan; index as i; first as isFirst">
+                      <td>
+                        <img class="rounded-circle z-depth-2 size-3" src="{{ user.avatar }}"
+                          title="avatar of {{ user.firstname }} {{ user.lastname }}" />
+                      </td>
+                      <!-- <td>
+                          <span class="flag-icon flag-icon-{{ user.country }}"></span>
+                      </td> -->
+                      <td>
+                        +{{ user.phone }}
+                      </td>
+                      <td>
+                        {{ user.pseudo }}
+                      </td>
+                      <td>
+                        {{ user.lastname }}
+                      </td>
+                      <td>
+                        {{ user.firstname }}
+                      </td>
+                      <!-- <td>
+                        <span *ngFor="let group of sandBox.allGroups$ | async">
+                                                <span *ngIf="group.id === user.groups['0']">
+                                                    {{ group.name }}
+                                                </span>
+                                            </span>
+
+                        <span *ngIf="(sandBox.groupEntities$ | async )[user.groups['0']]">
+                          {{ (sandBox.groupEntities$ | async )[user.groups['0']].name }}
+                        </span>
+                        <span *ngIf="!(sandBox.groupEntities$ | async )[user.groups['0']]">
+                          {{ 'Non défini' }}
+                        </span>
+                      </td> -->
+                      <!-- <td>
+                                          <button mat-raised-button 
+                                            class="btn btn-info btn-just-icon"
+                                            (click)="onUpdate(user.phone)">
+                                            <i class="material-icons">border_color</i>
+                                            <div class="ripple-container"></div>
+                                          </button>
+                                          <button mat-raised-button 
+                                            class="btn btn-info btn-round btn-just-icon"
+                                            (click)="onShowMore(user.phone)">
+                                            <i class="material-icons">more_horiz</i>
+                                            <div class="ripple-container"></div>
+                                          </button>
+                                        </td> -->
+                      <td class="td-actions text-right">
+                        <button *ngIf="(sandBox.loggedInUser$ | async).groups[0] < user.groups['0']" mat-raised-button
+                          type="button" [disabled]="(sandBox.isLoading$ | async)" matTooltip="Modifier"
+                          [matTooltipPosition]="'above'" (click)="onShowMore(user.phone)"
+                          class="btn btn-primary btn-link btn-sm btn-just-icon">
+                          <i class="material-icons">edit</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="sandBox.isLoading$ | async">
+                      <td colspan="6">
+                        <mat-progress-bar matBar [color]="color" [mode]="mode" [value]="spinnerValue">
+                        </mat-progress-bar>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td> &nbsp; </td>
+                      <td colspan="2">
+                        <mat-paginator #matPaginatorFan matPaginator [length]="lengthFan" [pageSize]="psizeFan" [pageIndex]="pindexFan"
+                          [pageSizeOptions]="pageSizeOptions" (page)="$event" showFirstLastButtons>
+                        </mat-paginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="tab-pane" id="celebrity" style="border: 1px solid #4CAF50; border-radius: 6px;padding:5px;">
+                <table class="table" #matSortCelebrity="matSort" matSort (matSortChange)="$event">
+                  <thead class="text-success">
+                    <th>
+                      Avatar
+                    </th>
+                    <!-- <th mat-sort-header="country">{{ 'Pays' }}</th> -->
+                    <th mat-sort-header="phone">{{ 'N° Mobile' }}</th>
+                    <th mat-sort-header="pseudo">{{ 'Pseudo' }}</th>
+                    <th mat-sort-header="lastname">{{ 'Nom' }}</th>
+                    <th mat-sort-header="firstname">{{ 'Prenom' }}</th>
+                    <!-- <th mat-sort-header="groups">{{ 'Role' }}</th> -->
+                    <th>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let user of sandBox.celebrityItems$ | async | slice:pindexCelebrity * psizeCelebrity:(pindexCelebrity + 1)*psizeCelebrity; index as i; first as isFirst">
+                      <td>
+                        <img class="rounded-circle z-depth-2 size-3" src="{{ user.avatar }}"
+                          title="avatar of {{ user.firstname }} {{ user.lastname }}" />
+                      </td>
+                      <!-- <td>
+                              <span class="flag-icon flag-icon-{{ user.country }}"></span>
+                          </td> -->
+                      <td>
+                        +{{ user.phone }}
+                      </td>
+                      <td>
+                        {{ user.pseudo }}
+                      </td>
+                      <td>
+                        {{ user.lastname }}
+                      </td>
+                      <td>
+                        {{ user.firstname }}
+                      </td>
+                      <!-- <td>
+                        <span *ngFor="let group of sandBox.allGroups$ | async">
+                                                    <span *ngIf="group.id === user.groups['0']">
+                                                        {{ group.name }}
+                                                    </span>
+                                                </span> 
+
+                        <span *ngIf="(sandBox.groupEntities$ | async )[user.groups['0']]">
+                              {{ (sandBox.groupEntities$ | async )[user.groups['0']].name }}
+                            </span>
+                            <span *ngIf="!(sandBox.groupEntities$ | async )[user.groups['0']]">
+                              {{ 'Non défini' }}
+                            </span>
+                      </td> -->
+                      <!-- <td>
+                                              <button mat-raised-button 
+                                                class="btn btn-info btn-just-icon"
+                                                (click)="onUpdate(user.phone)">
+                                                <i class="material-icons">border_color</i>
+                                                <div class="ripple-container"></div>
+                                              </button>
+                                              <button mat-raised-button 
+                                                class="btn btn-info btn-round btn-just-icon"
+                                                (click)="onShowMore(user.phone)">
+                                                <i class="material-icons">more_horiz</i>
+                                                <div class="ripple-container"></div>
+                                              </button>
+                                            </td> -->
+                      <td class="td-actions text-right">
+                        <button *ngIf="(sandBox.loggedInUser$ | async).groups[0] < user.groups['0']" mat-raised-button
+                          type="button" [disabled]="(sandBox.isLoading$ | async)" matTooltip="Modifier"
+                          [matTooltipPosition]="'above'" (click)="onShowMore(user.phone)"
+                          class="btn btn-primary btn-link btn-sm btn-just-icon">
+                          <i class="material-icons">edit</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="sandBox.isLoading$ | async">
+                      <td colspan="6">
+                        <mat-progress-bar matBar [color]="color" [mode]="mode" [value]="spinnerValue">
+                        </mat-progress-bar>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td> &nbsp; </td>
+                      <td colspan="2">
+                        <mat-paginator #matPaginatorCelebrity matPaginator [length]="lengthCelebrity" [pageSize]="psizeCelebrity" [pageIndex]="pindexCelebrity"
+                          [pageSizeOptions]="pageSizeOptions" (page)="$event" showFirstLastButtons>
+                        </mat-paginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="tab-pane" id="moderator" style="border: 1px solid #FF9800; border-radius: 6px;padding:5px;">
+                <table class="table" #matSortModerator="matSort" matSort (matSortChange)="$event">
+                  <thead class="text-warning">
+                    <th>
+                      Avatar
+                    </th>
+                    <!-- <th mat-sort-header="country">{{ 'Pays' }}</th> -->
+                    <th mat-sort-header="phone">{{ 'N° Mobile' }}</th>
+                    <th mat-sort-header="pseudo">{{ 'Pseudo' }}</th>
+                    <th mat-sort-header="lastname">{{ 'Nom' }}</th>
+                    <th mat-sort-header="firstname">{{ 'Prenom' }}</th>
+                    <!-- <th mat-sort-header="groups">{{ 'Role' }}</th> -->
+                    <th>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let user of sandBox.moderatorItems$ | async | slice:pindexModerator * psizeModerator:(pindexModerator + 1)*psizeModerator; index as i; first as isFirst">
+                      <td>
+                        <img class="rounded-circle z-depth-2 size-3" src="{{ user.avatar }}"
+                          title="avatar of {{ user.firstname }} {{ user.lastname }}" />
+                      </td>
+                      <!-- <td>
+                                  <span class="flag-icon flag-icon-{{ user.country }}"></span>
+                              </td> -->
+                      <td>
+                        +{{ user.phone }}
+                      </td>
+                      <td>
+                        {{ user.pseudo }}
+                      </td>
+                      <td>
+                        {{ user.lastname }}
+                      </td>
+                      <td>
+                        {{ user.firstname }}
+                      </td>
+                      <!-- <td>
+                         <span *ngFor="let group of sandBox.allGroups$ | async">
+                                                        <span *ngIf="group.id === user.groups['0']">
+                                                            {{ group.name }}
+                                                        </span>
+                                                    </span>
+
+                        <span *ngIf="(sandBox.groupEntities$ | async )[user.groups['0']]">
+                                  {{ (sandBox.groupEntities$ | async )[user.groups['0']].name }}
+                                </span>
+                                <span *ngIf="!(sandBox.groupEntities$ | async )[user.groups['0']]">
+                                  {{ 'Non défini' }}
+                                </span>
+                      </td> -->
+                      <!-- <td>
+                                                  <button mat-raised-button 
+                                                    class="btn btn-info btn-just-icon"
+                                                    (click)="onUpdate(user.phone)">
+                                                    <i class="material-icons">border_color</i>
+                                                    <div class="ripple-container"></div>
+                                                  </button>
+                                                  <button mat-raised-button 
+                                                    class="btn btn-info btn-round btn-just-icon"
+                                                    (click)="onShowMore(user.phone)">
+                                                    <i class="material-icons">more_horiz</i>
+                                                    <div class="ripple-container"></div>
+                                                  </button>
+                                                </td> -->
+                      <td class="td-actions text-right">
+                        <button *ngIf="(sandBox.loggedInUser$ | async).groups[0] < user.groups['0']" mat-raised-button
+                          type="button" [disabled]="(sandBox.isLoading$ | async)" matTooltip="Modifier"
+                          [matTooltipPosition]="'above'" (click)="onShowMore(user.phone)"
+                          class="btn btn-primary btn-link btn-sm btn-just-icon">
+                          <i class="material-icons">edit</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="sandBox.isLoading$ | async">
+                      <td colspan="6">
+                        <mat-progress-bar matBar [color]="color" [mode]="mode" [value]="spinnerValue">
+                        </mat-progress-bar>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td> &nbsp; </td>
+                      <td colspan="2">
+                        <mat-paginator #matPaginatorModerator [length]="lengthModerator" [pageSize]="psizeModerator" [pageIndex]="pindexModerator"
+                          [pageSizeOptions]="pageSizeOptions" (page)="$event" showFirstLastButtons>
+                        </mat-paginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <div class="tab-pane" id="admin" style="border: 1px solid #F44336; border-radius: 6px;padding:5px;">
+                <table class="table" #matSortAdmin="matSort" matSort (matSortChange)="$event">
+                  <thead class="text-danger">
+                    <th>
+                      Avatar
+                    </th>
+                    <!-- <th mat-sort-header="country">{{ 'Pays' }}</th> -->
+                    <th mat-sort-header="phone">{{ 'N° Mobile' }}</th>
+                    <th mat-sort-header="pseudo">{{ 'Pseudo' }}</th>
+                    <th mat-sort-header="lastname">{{ 'Nom' }}</th>
+                    <th mat-sort-header="firstname">{{ 'Prenom' }}</th>
+                    <!-- <th mat-sort-header="groups">{{ 'Role' }}</th> -->
+                    <th>
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let user of sandBox.adminItems$ | async | slice:pindexAdmin * psizeAdmin:(pindexAdmin + 1)*psizeAdmin; index as i; first as isFirst">
+                      <td>
+                        <img class="rounded-circle z-depth-2 size-3" src="{{ user.avatar }}"
+                          title="avatar of {{ user.firstname }} {{ user.lastname }}" />
+                      </td>
+                      <!-- <td>
+                                  <span class="flag-icon flag-icon-{{ user.country }}"></span>
+                              </td> -->
+                      <td>
+                        +{{ user.phone }}
+                      </td>
+                      <td>
+                        {{ user.pseudo }}
+                      </td>
+                      <td>
+                        {{ user.lastname }}
+                      </td>
+                      <td>
+                        {{ user.firstname }}
+                      </td>
+                      <!-- <td>
+                        <span *ngFor="let group of sandBox.allGroups$ | async">
+                                                        <span *ngIf="group.id === user.groups['0']">
+                                                            {{ group.name }}
+                                                        </span>
+                                                    </span> -
+
+                        <span *ngIf="(sandBox.groupEntities$ | async )[user.groups['0']]">
+                                  {{ (sandBox.groupEntities$ | async )[user.groups['0']].name }}
+                                </span>
+                                <span *ngIf="!(sandBox.groupEntities$ | async )[user.groups['0']]">
+                                  {{ 'Non défini' }}
+                                </span>
+                      </td> -->
+                      <!-- <td>
+                                                  <button mat-raised-button 
+                                                    class="btn btn-info btn-just-icon"
+                                                    (click)="onUpdate(user.phone)">
+                                                    <i class="material-icons">border_color</i>
+                                                    <div class="ripple-container"></div>
+                                                  </button>
+                                                  <button mat-raised-button 
+                                                    class="btn btn-info btn-round btn-just-icon"
+                                                    (click)="onShowMore(user.phone)">
+                                                    <i class="material-icons">more_horiz</i>
+                                                    <div class="ripple-container"></div>
+                                                  </button>
+                                                </td> -->
+                      <td class="td-actions text-right">
+                        <button *ngIf="(sandBox.loggedInUser$ | async).groups[0] < user.groups['0']" mat-raised-button
+                          type="button" [disabled]="(sandBox.isLoading$ | async)" matTooltip="Modifier"
+                          [matTooltipPosition]="'above'" (click)="onShowMore(user.phone)"
+                          class="btn btn-primary btn-link btn-sm btn-just-icon">
+                          <i class="material-icons">edit</i>
+                        </button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="sandBox.isLoading$ | async">
+                      <td colspan="6">
+                        <mat-progress-bar matBar [color]="color" [mode]="mode" [value]="spinnerValue">
+                        </mat-progress-bar>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td> &nbsp; </td>
+                      <td colspan="2">
+                        <mat-paginator #matPaginatorAdmin [length]="lengthAdmin" [pageSize]="psizeAdmin" [pageIndex]="pindexAdmin"
+                          [pageSizeOptions]="pageSizeOptions" (page)="$event" showFirstLastButtons>
+                        </mat-paginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

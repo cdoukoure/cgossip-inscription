@@ -1,0 +1,139 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-12">
+                <div class="post-footer">
+                    <button (click)="onClickBack()" class="btn btn-sm btn-default btn-round">
+                        Retour
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).value.id && (sandBox.formState$ | async).value.state === 'draft'"
+                        mat-raised-button type="button" matTooltip="Enregisrer et publier la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                    text: 'Êtes-vous sûr de vouloir publier cette publication?',
+                    width: 400,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText:'Oui, continuez!',
+                    confirmButtonAriaLabel: 'Oui, continuez!',
+                    confirmButtonClass: 'btn btn-rose btn-sm',
+                    cancelButtonText:'Annuler',
+                    cancelButtonAriaLabel: 'Annuler',
+                    cancelButtonClass: 'btn btn-default btn-sm',
+                    allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog()"
+                        class="btn btn-sm btn-rose btn-round pull-right">
+                        Publier
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).value.id && (sandBox.formState$ | async).value.state === 'draft'"
+                        (click)="showEditForm()" class="btn btn-sm btn-success btn-round pull-right">
+                        Modifier
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).value.state !== 'deleted'"
+                        mat-raised-button type="button" matTooltip="Supprimer la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Supprimer', 
+                    text: 'Êtes-vous sûr de vouloir supprimer cette nouvelle?',
+                    width: 400,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText:'Oui, continuez!',
+                    confirmButtonAriaLabel: 'Oui, continuez!',
+                    confirmButtonClass: 'btn btn-rose btn-sm',
+                    cancelButtonText:'Annuler',
+                    cancelButtonAriaLabel: 'Annuler',
+                    cancelButtonClass: 'btn btn-default btn-sm',
+                    allowEnterKey: false}" (confirm)="onConfirmDeleteDialog()"
+                        class="btn btn-sm btn-danger btn-round btn-just-icon pull-right">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+                <div class="card card-post">
+                    <div>
+                        <div class="post-avatar"
+                            *ngIf="(sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author]">
+                            <a href="">
+                                <img class="img"
+                                    [src]="(sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author].avatar" />
+                                <span>{{ (sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author].firstname }}&nbsp;{{ (sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author].lastname }}</span>
+                            </a>
+                        </div>
+                        <div class="post-header">
+                            <h2>{{(sandBox.formState$ | async).value.title}}</h2>
+                            <span class="post-meta">{{ (sandBox.formState$ | async).value.lastmodified }}</span>
+                            <!-- <h3>Description</h3>
+                            <p class="card-description">
+                                {{ (sandBox.formState$ | async).value.description }}
+                            </p>  -->
+                        </div>
+                        <div class="post-media">
+                            <img *ngIf="(sandBox.formState$ | async).value.media.type === 'image'" class="img-fluid"
+                                [src]="sanitizer.bypassSecurityTrustUrl((sandBox.formState$ | async).value.mediaOri.url)" />
+                            <div *ngIf="(sandBox.formState$ | async).value.media.type === 'video'"
+                                class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item"
+                                    [src]="sanitizer.bypassSecurityTrustResourceUrl((sandBox.formState$ | async).value.mediaOri.url)"></iframe>
+                            </div>
+                        </div>
+                        <div class="post-body">
+                            <!-- <h3>Contenu d&eacute;taill&eacute;</h3> -->
+                            <p class="card-content">
+                                {{ (sandBox.formState$ | async).value.content }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <button (click)="onClickBack()" class="btn btn-sm btn-default btn-round">
+                        Retour
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).value.id && (sandBox.formState$ | async).value.state === 'draft'"
+                        mat-raised-button type="button" matTooltip="Enregisrer et publier la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                        text: 'Êtes-vous sûr de vouloir publier cette publication?',
+                        width: 400,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        focusConfirm: false,
+                        confirmButtonText:'Oui, continuez!',
+                        confirmButtonAriaLabel: 'Oui, continuez!',
+                        confirmButtonClass: 'btn btn-rose btn-sm',
+                        cancelButtonText:'Annuler',
+                        cancelButtonAriaLabel: 'Annuler',
+                        cancelButtonClass: 'btn btn-default btn-sm',
+                        allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog()"
+                        class="btn btn-sm btn-rose btn-round pull-right">
+                        Publier
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).value.id && (sandBox.formState$ | async).value.state === 'draft'"
+                        (click)="showEditForm()" class="btn btn-sm btn-success btn-round pull-right">
+                        Modifier
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).value.state !== 'deleted'"
+                        mat-raised-button type="button" matTooltip="Supprimer la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Supprimer', 
+                        text: 'Êtes-vous sûr de vouloir supprimer cette nouvelle?',
+                        width: 400,
+                        showCloseButton: true,
+                        showCancelButton: true,
+                        focusConfirm: false,
+                        confirmButtonText:'Oui, continuez!',
+                        confirmButtonAriaLabel: 'Oui, continuez!',
+                        confirmButtonClass: 'btn btn-rose btn-sm',
+                        cancelButtonText:'Annuler',
+                        cancelButtonAriaLabel: 'Annuler',
+                        cancelButtonClass: 'btn btn-default btn-sm',
+                        allowEnterKey: false}" (confirm)="onConfirmDeleteDialog()"
+                        class="btn btn-sm btn-danger btn-round btn-just-icon pull-right">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

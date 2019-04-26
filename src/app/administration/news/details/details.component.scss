@@ -1,0 +1,98 @@
+
+.validated {
+  border-top: 3px solid #4caf50;
+}
+.refused {
+  border-top: 3px solid #f44336;
+}
+.waiting {
+  border-top: 3px solid #00bcd4;
+}
+.card-post{
+  margin-top: 30px;
+
+  .post-avatar {
+      padding: 5px;
+      /*margin: -25px auto 0 15px;*/
+      overflow: hidden;
+
+      & + .post-body {
+          margin-top: 15px;
+      }
+      a {
+        display: block;
+      }
+
+      img {
+          margin-right: 5px;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+      }
+
+      span {
+          font-size: 10px;
+          color: darkgray;
+          margin: -12px 0 0 55px;
+      }
+
+      span:not([class*="post-meta"]) {
+          font-weight: bold;
+          font-size: 14px;
+          margin: 0px;
+      }
+  }
+
+  .post-header {
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      color: darkslategray;
+      margin: 0 0.8rem;
+    }
+
+    p {
+      margin: 0 0.8rem;
+      text-align: justify;
+    }
+
+    span {
+      font-size: 10px;
+      color: darkslategrey;
+      margin: 0 0.8rem;
+    }
+
+    a {
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      /*min-height: 100px;
+      height: auto; */
+      background-color: #cccccc;
+    }
+  }
+  .post-body {
+    padding: 0.8rem;
+
+    p {
+      text-align: justify;
+      color: darkslategrey;
+    }
+  }
+
+  .post-media {
+    width: 100%;
+    background: transparent;
+
+    img, video {
+      width: 100%;
+    }
+  }
+
+}
+  
+  

@@ -1,0 +1,118 @@
+<!-- <div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+                <!-- <cdk-virtual-scroll-viewport style="min-height:800px; width:100%;overflow:hidden;" [itemSize]="500"> --
+                <cdk-virtual-scroll-viewport  style="height: 600px;width:100%;" [itemSize]="20">
+                    <div *cdkVirtualFor="let item of sandBox.allItems$ | async" class="col-md-6 offset-md-3">
+                        <post-card [item]="item" [author]="(sandBox.userEntities$ | async)[item.author]"
+                            (onClick)="onPostAction($event)">
+                        </post-card>
+                    </div>
+                    <div class="col-md-8 offset-md-2" *ngIf="(sandBox.isLoading$ | async)">
+                            <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                            </mat-progress-bar>
+                    </div>
+                </cdk-virtual-scroll-viewport>
+
+    
+                <!-- <div *ngFor="let item of sandBox.allItems$ | async;">
+              <div> {{ item.title }} </div>
+          </div> --
+            <!-- <div class="col-md-12 text-center">
+            <button (click)="onListMore()" class="btn btn-rose btn-round btn-just-icon">
+                <i class="material-icons">add</i>
+            </button>
+          </div> --
+        </div>
+    </div>
+</div> -->
+
+<div class="main-content">
+    <div class="container-fluid">
+        <!-- <div class="row">
+            <div class="col-md-8 offset-md-2" *ngIf="sandBox.isLoading$ | async">
+                <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                </mat-progress-bar>
+            </div>
+        </div> -->
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header card-header-icon card-header-rose">
+                        <div class="card-icon">
+                            <i class="material-icons">people</i>
+                        </div>
+                        <h4 class="card-title">Publications en attente de validation</h4>
+                    </div>
+                    <div class="card-body">
+                        <cdk-virtual-scroll-viewport [itemSize]="1" style="min-height: 600px;width:100%;">
+
+                            <div *cdkVirtualFor="let item of sandBox.waitingItems$ | async">
+                                <post-card [largeFormat]="true" [item]="item"
+                                    [author]="(sandBox.userEntities$ | async)[item.author]"
+                                    (onClick)="onPostAction($event)">
+                                </post-card>
+                            </div>
+                            <div class="col-md-8 offset-md-2" *ngIf="sandBox.isLoading$ | async">
+                                <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                                </mat-progress-bar>
+                            </div>
+                        </cdk-virtual-scroll-viewport>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="card card-plain">
+                    <div class="card-header card-header-tabs card-header-primary">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title">{{'Publication déjà traitées'}}</span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link active" href="#validated" data-toggle="tab">
+                                            <i class="material-icons">thumb_up</i> {{'Validées'}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#refused" data-toggle="tab">
+                                            <i class="material-icons">thumb_down</i> {{'Refusées'}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="validated">
+                                <cdk-virtual-scroll-viewport [itemSize]="1" style="min-height: 600px;width:100%;">
+                                    <div *cdkVirtualFor="let item of sandBox.validatedItems$ | async">
+                                        <post-card [item]="item" [author]="(sandBox.userEntities$ | async)[item.author]"
+                                            (onClick)="onPostAction($event)">
+                                        </post-card>
+                                    </div>
+                                    <div class="col-md-8 offset-md-2" *ngIf="sandBox.isLoading$ | async">
+                                        <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                                        </mat-progress-bar>
+                                    </div>
+                                </cdk-virtual-scroll-viewport>
+                            </div>
+                            <div class="tab-pane" id="refused">
+                                <cdk-virtual-scroll-viewport [itemSize]="1" style="min-height: 600px;width:100%;">
+                                    <div *cdkVirtualFor="let item of sandBox.refusedItems$ | async">
+                                        <post-card [item]="item" [author]="(sandBox.userEntities$ | async)[item.author]"
+                                            (onClick)="onPostAction($event)">
+                                        </post-card>
+                                    </div>
+                                </cdk-virtual-scroll-viewport>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

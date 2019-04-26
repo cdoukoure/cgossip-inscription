@@ -1,0 +1,185 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-5 offset-lg-1 col-md-12">
+                <div class="post-footer">
+                    <button (click)="onClickBack()" class="btn btn-sm btn-default btn-round">
+                        Retour
+                    </button>
+                    <button *ngIf="(sandBox.formState$ | async).value.state === 'waiting'" mat-raised-button
+                        type="button" matTooltip="Refuser la publication du post" [matTooltipPosition]="'above'" [swal]="{title: 'Refuser', 
+                            text: 'Êtes-vous sûr de vouloir refuser cette publication?',
+                            width: 400,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:'Oui, continuez!',
+                            confirmButtonAriaLabel: 'Oui, continuez!',
+                            confirmButtonClass: 'btn btn-rose btn-sm',
+                            cancelButtonText:'Annuler',
+                            cancelButtonAriaLabel: 'Annuler',
+                            cancelButtonClass: 'btn btn-default btn-sm',
+                            allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('refusal',$event)"
+                        class="btn btn-sm btn-danger btn-round pull-right">
+                        <i class="material-icons">thumb_down</i>&nbsp;Refuser
+                    </button>
+                    <button *ngIf="(sandBox.formState$ | async).value.state === 'waiting'" mat-raised-button
+                        type="button" matTooltip="Refuser la publication du post" [matTooltipPosition]="'above'" [swal]="{title: 'Validation', 
+                            text: 'Êtes-vous sûr de vouloir valider cette publication?',
+                            width: 400,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:'Oui, continuez!',
+                            confirmButtonAriaLabel: 'Oui, continuez!',
+                            confirmButtonClass: 'btn btn-success btn-sm',
+                            cancelButtonText:'Annuler',
+                            cancelButtonAriaLabel: 'Annuler',
+                            cancelButtonClass: 'btn btn-default btn-sm',
+                            allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('validation',$event)"
+                        class="btn btn-sm btn-success btn-round pull-right">
+                        <i class="material-icons">thumb_up</i>&nbsp;Valider
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-5 offset-lg-1 col-md-12">
+                <div class="card card-post" [class.waiting]="(sandBox.formState$ | async).value.state === 'waiting'"
+                    [class.validated]="(sandBox.formState$ | async).value.state === 'validated'"
+                    [class.refused]="(sandBox.formState$ | async).value.state === 'refused'">
+                    <div class="post-avatar"
+                        *ngIf="(sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author]">
+                        <a href="">
+                            <img class="img"
+                                [src]="(sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author].avatar" />
+                            <span>{{ (sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author].firstname }}&nbsp;{{ (sandBox.userEntities$ | async)[(sandBox.formState$ | async).value.author].lastname }}</span>
+                        </a>
+                    </div>
+                    <div class="post-header">
+                        <h2>{{(sandBox.formState$ | async).value.title}}</h2>
+                        <span class="post-meta">
+                            {{ (sandBox.formState$ | async).value.lastmodified }}
+                        </span>
+
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like
+                            <span
+                                *ngIf="(sandBox.formState$ | async).value.stats">{{ (sandBox.formState$ | async).value.stats.likes }}
+                            </span>
+                        </a>
+                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Commentaires
+                            <span
+                                *ngIf="(sandBox.formState$ | async).value.stats">{{ (sandBox.formState$ | async).value.stats.comments }}
+                            </span>
+                        </a>
+                        <!-- <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a> -->
+                    </div>
+                    <div class="post-media">
+                        <img *ngIf="(sandBox.formState$ | async).value.mediaOri.type === 'image'" class="img-fluid"
+                            [src]="(sandBox.formState$ | async).value.mediaOri.url" />
+                        <div *ngIf="(sandBox.formState$ | async).value.mediaOri.type === 'video'"
+                            class="embed-responsive embed-responsive-1by1">
+                            <iframe class="embed-responsive-item"
+                                [src]="(sandBox.formState$ | async).value.mediaOri.url"></iframe>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <!-- <h3>Contenu d&eacute;taill&eacute;</h3> -->
+                        <p class="card-content">
+                            {{ (sandBox.formState$ | async).value.content }}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like
+                            <span
+                                *ngIf="(sandBox.formState$ | async).value.stats">{{ (sandBox.formState$ | async).value.stats.likes }}</span>
+
+                        </a>
+                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Commentaires
+                            <span
+                                *ngIf="(sandBox.formState$ | async).value.stats">{{ (sandBox.formState$ | async).value.stats.comments }}
+                            </span>
+                        </a>
+                        <!-- <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a> -->
+                    </div>
+
+                </div>
+                <div class="post-footer">
+                    <button (click)="onClickBack()" class="btn btn-sm btn-default btn-round">
+                        Retour
+                    </button>
+                    <button *ngIf="(sandBox.formState$ | async).value.state === 'waiting'" mat-raised-button
+                        type="button" matTooltip="Refuser la publication du post" [matTooltipPosition]="'above'" [swal]="{title: 'Refuser', 
+                            text: 'Êtes-vous sûr de vouloir refuser cette publication?',
+                            width: 400,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:'Oui, continuez!',
+                            confirmButtonAriaLabel: 'Oui, continuez!',
+                            confirmButtonClass: 'btn btn-rose btn-sm',
+                            cancelButtonText:'Annuler',
+                            cancelButtonAriaLabel: 'Annuler',
+                            cancelButtonClass: 'btn btn-default btn-sm',
+                            allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('refusal',$event)"
+                        class="btn btn-sm btn-danger btn-round pull-right">
+                        <i class="material-icons">thumb_down</i>&nbsp;Refuser
+                    </button>
+                    <button *ngIf="(sandBox.formState$ | async).value.state === 'waiting'" mat-raised-button
+                        type="button" matTooltip="Refuser la publication du post" [matTooltipPosition]="'above'" [swal]="{title: 'Validation', 
+                            text: 'Êtes-vous sûr de vouloir valider cette publication?',
+                            width: 400,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:'Oui, continuez!',
+                            confirmButtonAriaLabel: 'Oui, continuez!',
+                            confirmButtonClass: 'btn btn-success btn-sm',
+                            cancelButtonText:'Annuler',
+                            cancelButtonAriaLabel: 'Annuler',
+                            cancelButtonClass: 'btn btn-default btn-sm',
+                            allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('validation',$event)"
+                        class="btn btn-sm btn-success btn-round pull-right">
+                        <i class="material-icons">thumb_up</i>&nbsp;Valider
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-12">
+                <div class="chat-message clearfix">
+                    <form [ngrxFormState]="sandBox.commentState$ | async">
+                        <mat-form-field [floatLabel]="true">
+                            <textarea name="comment" id="comment"
+                                cdkTextareaAutosize cdkAutosizeMinRows="3"
+                                #comment="cdkTextareaAutosize" 
+                                matInput
+                                placeholder="Ecrire un commentaire"
+                                [ngrxFormControlState]="(sandBox.commentState$ | async).controls.text">
+                            </textarea>
+                        </mat-form-field>
+                        <!-- <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;<i class="fa fa-file-image-o"></i> -->
+                        <button mat-raised-button (click)="onComment()" class="btn btn-sm btn-rose pull-right">Envoyer</button>
+                    </form>
+                </div> <!-- end chat-message -->
+                <cdk-virtual-scroll-viewport [itemSize]="100"
+                    style="min-height: 547px;width:100%;border: 1px solid white;">
+                    <div class="chat-history">
+                        <ul>
+                            <div *cdkVirtualFor="let comment of (sandBox.formState$ | async).value.comments">
+                                <post-comment [comment]="comment"></post-comment>
+                            </div>
+                        </ul>
+                    </div>
+                    <div class="col-md-8 offset-md-2" *ngIf="sandBox.isLoading$ | async">
+                        <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                        </mat-progress-bar>
+                    </div>
+                </cdk-virtual-scroll-viewport>
+
+            </div>
+
+        </div>
+    </div>
+</div>

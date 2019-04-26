@@ -1,0 +1,16 @@
+<li>
+    <div class="message-data">
+      <span class="message-data-name">
+        <img class="img authavatar" [src]="comment.authavatar" />
+        <!-- <i class="fa fa-circle online"></i> -->
+        &nbsp;{{ comment.pseudo || 'Celebrity Gossip'}}
+      </span>
+      <span class="message-data-time">{{ comment.date }}</span>
+    </div>
+    <div class="card message my-message">
+      {{ comment.text }}
+    </div>
+    <post-comment-list  [comments]="comment.comments"></post-comment-list>
+</li>
+
+

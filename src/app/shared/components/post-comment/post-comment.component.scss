@@ -1,0 +1,70 @@
+li {
+  overflow: hidden;
+  border:none;
+}
+.authavatar {
+  border       : 2px solid white;
+  border-radius: 50%;
+  width        : 40px;
+  height       : 40px;
+}
+
+.content {
+  left: 40px;
+}
+
+.post-meta {
+  font-size  : 9px;
+  color      : darkslategrey;
+  max-height : 10px;
+  line-height: 10px;
+}
+
+.message-data {
+  margin-bottom: 5px;
+}
+
+.message-data-time {
+  color       : lighten(grey, 8%);
+  padding-left: 6px;
+  font-size: .7rem;
+}
+
+.message {
+  color        : #1c1c1c;
+  padding      : 18px 20px;
+  line-height  : 26px;
+  font-size    : .9rem;
+  border-radius: 7px;
+  margin-bottom: 15px;
+  margin-top:    15px!important;
+  width        : 90%;
+  position     : relative;
+
+  &:after {
+    bottom             : 100%;
+    left               : 7%;
+    border             : solid transparent;
+    content            : " ";
+    height             : 0;
+    width              : 0;
+    position           : absolute;
+    pointer-events     : none;
+    border-bottom-color: white;
+    border-width       : 10px;
+    margin-left        : -10px;
+  }
+}
+
+.my-message {
+  /*background: $green;*/
+}
+
+.other-message {
+  /* background: $blue;*/
+
+  &:after {
+    border-bottom-color: cyan;
+    left               : 93%;
+  }
+}

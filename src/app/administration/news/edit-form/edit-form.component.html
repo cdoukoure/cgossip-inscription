@@ -1,0 +1,261 @@
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-12">
+
+                <!--                 <div class="post-footer">
+                    <button (click)="onClickBack()" class="btn btn-sm btn-default btn-round">
+                        Retour
+                    </button>
+                    <button
+                        *ngIf="!(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        mat-raised-button type="button" matTooltip="Enregisrer et publier la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                text: 'Êtes-vous sûr de vouloir publier cette publication?',
+                width: 400,
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:'Oui, continuez!',
+                confirmButtonAriaLabel: 'Oui, continuez!',
+                confirmButtonClass: 'btn btn-rose btn-sm',
+                cancelButtonText:'Annuler',
+                cancelButtonAriaLabel: 'Annuler',
+                cancelButtonClass: 'btn btn-default btn-sm',
+                allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('creation')"
+                        class="btn btn-sm btn-rose btn-round pull-right">
+                        Enregisrer et publier
+                    </button>
+                    <button
+                        *ngIf="!(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        (click)="onConfirmTreatmentDialog('cretion')" class="btn btn-sm btn-default btn-round pull-right">
+                        Enregisrer
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        mat-raised-button type="button" matTooltip="Enregisrer et publier la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                text: 'Êtes-vous sûr de vouloir publier cette publication?',
+                width: 400,
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:'Oui, continuez!',
+                confirmButtonAriaLabel: 'Oui, continuez!',
+                confirmButtonClass: 'btn btn-rose btn-sm',
+                cancelButtonText:'Annuler',
+                cancelButtonAriaLabel: 'Annuler',
+                cancelButtonClass: 'btn btn-default btn-sm',
+                allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('modification')"
+                        class="btn btn-sm btn-rose btn-round pull-right">
+                        Enregisrer et publier
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        (click)="onConfirmTreatmentDialog('modification')" class="btn btn-sm btn-default btn-round pull-right">
+                        Enregisrer
+                    </button>
+                </div>
+
+ -->
+                <div class="card">
+                    <div class="card-header card-header-icon card-header-rose">
+                        <div class="card-icon">
+                            <i class="material-icons">person</i>
+                        </div>
+                        <h4 class="card-title">{{ 'Editer une nouvelle' }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <form novalidate [ngrxFormState]="sandBox.formState$ | async">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <mat-form-field [floatLabel]="true" class="example-full-width">
+                                        <input matInput type="text"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.title"
+                                            placeholder="Titre" autocomplete="off" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <mat-form-field [floatLabel]="true" class="example-full-width">
+                                        <textarea matInput placeholder="Description" cdkTextareaAutosize
+                                            cdkAutosizeMinRows="3" #description="cdkTextareaAutosize"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.description"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label id="example-radio-group-label">Format du media</label><br />
+                                    <mat-radio-group (change)="clearMediaUrl()"
+                                        [ngrxFormControlState]="(sandBox.formState$ | async).controls.media.controls.type"
+                                        aria-label="Selectionner une option">
+                                        <mat-radio-button value="image">Image</mat-radio-button>
+                                        <mat-radio-button value="video">Video</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="(sandBox.formState$ | async).controls.media.value.type === 'image'">
+                                <div class="col-md-12 text-center" style="padding-left: 0px;padding-right: 0px;">
+                                    <img width="100%" style="display: block;"
+                                        *ngIf="(!(sandBox.formState$ | async).value.media.url || (sandBox.formState$ | async).value.media.url ==='') && (sandBox.formState$ | async).value.mediaOri.url !== ''"
+                                        [src]="(sandBox.formState$ | async).value.mediaOri.url" />
+
+                                    <img width="100%" style="display: block;"
+                                        *ngIf="(sandBox.formState$ | async).value.media.url !==''"
+                                        [src]="(sandBox.formState$ | async).value.media.url" />
+
+                                    <label class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">find_in_page</i>
+                                        Selectionner une image
+                                        <input #fileInput type="file" (change)="onFileChange($event)"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.media.controls.url"
+                                            hidden />
+                                    </label>
+                                    <button (click)="clearMediaUrl()"
+                                        *ngIf="(sandBox.formState$ | async).value.media.url && (sandBox.formState$ | async).value.media.url !==''"
+                                        class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">delete</i>
+                                        Retirer l'image
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="(sandBox.formState$ | async).controls.media.value.type === 'video'">
+                                <div class="col-lg-12">
+                                    <mat-form-field [floatLabel]="true" class="example-full-width">
+                                        <input matInput type="text"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.media.controls.url"
+                                            placeholder="URL de la video" autocomplete="off" />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-12" *ngIf="(sandBox.formState$ | async).controls.media.controls.url.isValid && (sandBox.formState$ | async).controls.media.controls.url.isTouched && (sandBox.formState$ | async).value.media.url !== ''">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item"
+                                            [src]="sanitizer.bypassSecurityTrustResourceUrl((sandBox.formState$ | async).value.media.url)"></iframe>
+                                    </div>
+                                    <br/>
+                                </div>
+
+                                <div class="col-lg-12" *ngIf="(sandBox.formState$ | async).value.media.url === '' || (sandBox.formState$ | async).controls.media.controls.url.isValid === false || ((sandBox.formState$ | async).controls.media.controls.url.isValid && (sandBox.formState$ | async).controls.media.controls.url.isTouched === false)">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item"
+                                            [src]="sanitizer.bypassSecurityTrustResourceUrl((sandBox.formState$ | async).value.mediaOri.url)"></iframe>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <mat-form-field [floatLabel]="true" class="example-full-width">
+                                        <textarea matInput id="content" cdkTextareaAutosize cdkAutosizeMinRows="5"
+                                            #content="cdkTextareaAutosize" placeholder="Contenu de la nouvelle"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.content"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field>
+                                        <input matInput #datetimepicker id="datetimepicker" type="text"
+                                            placeholder="Date de fin" (dateChange)="onDatetimeChange()"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.delay" />
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="sandBox.isLoading$ | async">
+                                <div class="col-md-12" style="height: 20px;">
+                                    <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                                    </mat-progress-bar>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="post-footer">
+                    <button (click)="onClickBack()" class="btn btn-sm btn-default btn-round">
+                        Retour
+                    </button>
+                    <button
+                        *ngIf="!(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        mat-raised-button type="button" matTooltip="Enregisrer et publier la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                    text: 'Êtes-vous sûr de vouloir publier cette nouvelle?',
+                    width: 400,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText:'Oui, continuez!',
+                    confirmButtonAriaLabel: 'Oui, continuez!',
+                    confirmButtonClass: 'btn btn-rose btn-sm',
+                    cancelButtonText:'Annuler',
+                    cancelButtonAriaLabel: 'Annuler',
+                    cancelButtonClass: 'btn btn-default btn-sm',
+                    allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('validation')"
+                        class="btn btn-sm btn-rose btn-round pull-right">
+                        Enregisrer et publier
+                    </button>
+                    <button
+                        *ngIf="!(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        (click)="onConfirmTreatmentDialog('creation')"
+                        class="btn btn-sm btn-success btn-round pull-right">
+                        Enregisrer
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        mat-raised-button type="button" matTooltip="Enregisrer et publier la nouvelle"
+                        [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                    text: 'Êtes-vous sûr de vouloir publier cette nouvelle?',
+                    width: 400,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText:'Oui, continuez!',
+                    confirmButtonAriaLabel: 'Oui, continuez!',
+                    confirmButtonClass: 'btn btn-rose btn-sm',
+                    cancelButtonText:'Annuler',
+                    cancelButtonAriaLabel: 'Annuler',
+                    cancelButtonClass: 'btn btn-default btn-sm',
+                    allowEnterKey: false}" (confirm)="onConfirmTreatmentDialog('validation')"
+                        class="btn btn-sm btn-rose btn-round pull-right">
+                        Enregisrer et publier
+                    </button>
+                    <button
+                        *ngIf="(sandBox.formState$ | async).controls.id && (sandBox.formState$ | async).controls.state.value === 'draft'"
+                        (click)="onConfirmTreatmentDialog('creation')"
+                        class="btn btn-sm btn-success btn-round pull-right">
+                        Enregisrer
+                    </button>
+                    <button *ngIf="(sandBox.formState$ | async).controls.id" mat-raised-button type="button"
+                        matTooltip="Supprimer la nouvelle" [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                    text: 'Êtes-vous sûr de vouloir supprimer cette nouvelle?',
+                    width: 400,
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    focusConfirm: false,
+                    confirmButtonText:'Oui, continuez!',
+                    confirmButtonAriaLabel: 'Oui, continuez!',
+                    confirmButtonClass: 'btn btn-rose btn-sm',
+                    cancelButtonText:'Annuler',
+                    cancelButtonAriaLabel: 'Annuler',
+                    cancelButtonClass: 'btn btn-default btn-sm',
+                    allowEnterKey: false}" (confirm)="onConfirmDeleteDialog()"
+                        class="btn btn-sm btn-rose btn-round btn-just-icon pull-right">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

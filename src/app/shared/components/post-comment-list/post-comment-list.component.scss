@@ -1,0 +1,47 @@
+.chat-history {
+
+  ul {
+    list-style: none;
+  }
+
+}
+
+.online,
+.offline,
+.me {
+  margin-right: 3px;
+  font-size   : 10px;
+}
+
+.online {
+  color: greenyellow;
+}
+
+.offline {
+  color: orange;
+}
+
+.me {
+  color: cyan;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.float-right {
+  float: right;
+}
+
+.clearfix:after {
+  visibility: hidden;
+  display   : block;
+  font-size : 0;
+  content   : " ";
+  clear     : both;
+  height    : 0;
+}

@@ -1,0 +1,103 @@
+<div class="col-md-12">
+    <div class="card card-post" [class.waiting]="item.state === 'waiting'"
+        [class.validated]="item.state === 'validated'" [class.refused]="item.state === 'refused'">
+        <div class="post-avatar" *ngIf="author">
+            <a href="">
+                <img class="img" [src]="author.avatar" />
+                <span>{{ author.firstname }}&nbsp;{{ author.lastname }}</span>
+            </a>
+        </div>
+        <div class="post-header">
+            <h4>{{item.title}}</h4>
+            <div class="card-description" *ngIf="!showDetail">
+                <p *ngIf="largeFormat">{{ item.description }}</p>
+                <button (click)="onEmitEvent('getItem')" class="btn btn-rose btn-link btn-sm pull-right">Voir la
+                    fiche</button>
+                <!-- <button mat-raised-button *ngIf="largeFormat" type="button" matTooltip="Voir plus" [matTooltipPosition]="'above'"
+                    (click)="onShowMore()" class="btn btn-primary btn-link btn-sm btn-just-icon">
+                    <i class="material-icons">more_horiz</i>
+                </button> -->
+            </div>
+            <!-- <div class="post-body" *ngIf="largeFormat && showDetail">
+                <p class="card-content">
+                    {{ item.content }}
+                    <button mat-raised-button type="button" matTooltip="Voir plus" [matTooltipPosition]="'above'"
+                        (click)="onShowMore()" class="btn btn-primary btn-link btn-sm btn-just-icon pull-right">
+                        <i class="material-icons">more_horiz</i>
+                    </button>
+                </p>
+            </div> -->
+            <div class="post-media" *ngIf="largeFormat">
+                <img *ngIf="item.media.type === 'image'" class="img-fluid" [src]="sanitizer.bypassSecurityTrustResourceUrl(item.media.url)" />
+                <div *ngIf="item.media.type === 'video'" class="embed-responsive embed-responsive-1by1">
+                    <iframe class="embed-responsive-item"
+                        [src]="sanitizer.bypassSecurityTrustResourceUrl(item.media.url)"></iframe>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="card-footer">
+            <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like
+                {{ item.stats.likes }}</a>
+            <a href="#" class="card-link"><i class="fa fa-comment"></i> Commentaires
+                {{ item.stats.comments }}</a>
+            <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+        </div> -->
+        <div class="post-footer" *ngIf="item.state === 'draft' || item.state === 'waiting'">
+            <button *ngIf="item.id && item.state === 'draft'" mat-raised-button type="button"
+                matTooltip="Publier la nouvelle" [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
+                text: 'Êtes-vous sûr de vouloir publier cette publication?',
+                width: 400,
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:'Oui, continuez!',
+                confirmButtonAriaLabel: 'Oui, continuez!',
+                confirmButtonClass: 'btn btn-rose btn-sm',
+                cancelButtonText:'Annuler',
+                cancelButtonAriaLabel: 'Annuler',
+                cancelButtonClass: 'btn btn-default btn-sm',
+                allowEnterKey: false}" (confirm)="onEmitEvent('validation')"
+                class="btn btn-sm btn-rose btn-round pull-right">
+                Publier
+            </button>
+            <button *ngIf="item.id && item.state === 'draft'" (click)="onEmitEvent('edition')"
+                class="btn btn-sm btn-default btn-round pull-right">
+                Modifier
+            </button>
+            <button *ngIf="item.state === 'waiting'" mat-raised-button type="button"
+                matTooltip="Refuser la publication du post" [matTooltipPosition]="'above'" [swal]="{title: 'Refuser', 
+                text: 'Êtes-vous sûr de vouloir refuser cette publication?',
+                width: 400,
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:'Oui, continuez!',
+                confirmButtonAriaLabel: 'Oui, continuez!',
+                confirmButtonClass: 'btn btn-rose btn-sm',
+                cancelButtonText:'Annuler',
+                cancelButtonAriaLabel: 'Annuler',
+                cancelButtonClass: 'btn btn-default btn-sm',
+                allowEnterKey: false}" (confirm)="onEmitEvent('refusal')"
+                class="btn btn-sm btn-rose btn-round pull-right">
+                <i class="material-icons">thumb_down</i>&nbsp;Refuser
+            </button>
+            <button *ngIf="item.state === 'waiting'" mat-raised-button type="button"
+                matTooltip="Refuser la publication du post" [matTooltipPosition]="'above'" [swal]="{title: 'Validation', 
+                text: 'Êtes-vous sûr de vouloir valider cette publication?',
+                width: 400,
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:'Oui, continuez!',
+                confirmButtonAriaLabel: 'Oui, continuez!',
+                confirmButtonClass: 'btn btn-success btn-sm',
+                cancelButtonText:'Annuler',
+                cancelButtonAriaLabel: 'Annuler',
+                cancelButtonClass: 'btn btn-default btn-sm',
+                allowEnterKey: false}" (confirm)="onEmitEvent('validation')"
+                class="btn btn-sm btn-success btn-round pull-right">
+                <i class="material-icons">thumb_up</i>&nbsp;Valider
+            </button>
+        </div>
+    </div>
+</div>

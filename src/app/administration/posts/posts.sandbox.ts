@@ -14,7 +14,7 @@ import {
   PostSelectors
 } from '@shared/store';
 
-import { Post } from '@app/shared/models';
+import { Post, LoadItems } from '@app/shared/models';
 import { Router } from '@angular/router';
 import { UtilService, buildGhosts } from '@app/shared/utility';
 import { RowFilter } from '@app/shared/store/utils/store-utils';
@@ -30,8 +30,7 @@ export class PostsSandbox extends Sandbox {
 
   sort: Sort;
 
-  filter:RowFilter[];
-
+  filter: RowFilter[];
 
   constructor(   
     private router: Router,
@@ -55,8 +54,8 @@ export class PostsSandbox extends Sandbox {
   public refusedItems$ = this.store$.select(PostSelectors.selectItemsFilterAndSortBy([{key: "state", value:"refused"}], this.sort));
 
   public userEntities$ = this.store$.select(state => state.users.entities);
-  public isLoading$       = this.store$.select(PostSelectors.selectIsLoading);
-  public message$         = this.store$.select(PostSelectors.selectMessage);
+  public isLoading$ = this.store$.select(PostSelectors.selectIsLoading);
+  public message$ = this.store$.select(PostSelectors.selectMessage);
   
   // public forNavigateTo$ = combineLatest(
   //   this.viewMode$,
@@ -67,20 +66,26 @@ export class PostsSandbox extends Sandbox {
 
   /**
    * Loads Posts from the server
-   */
-  public loadItems(
-    filter : any = null, 
-    pindex : number = 0, 
-    psize : number = 2500, 
-    sort : any = null
-  ): void {
-    this.store$.dispatch(new PostActions.LoadPostsAction({
-      filter, 
-      pindex, 
-      psize, 
-      sort   
-    }))
+   *
+  public loadItems(params: any): void {
+    this.store$.dispatch(new PostActions.LoadPostsAction(new LoadItems(params)))
   }
+  */
+ public loadItems(
+  filter : any = null, 
+  pindex : number = 0, 
+  psize : number = 100, 
+  sort : any = null
+): void {
+  let start = pindex * psize // eq 5
+  this.store$.dispatch(new PostActions.LoadPostsAction({
+    filter, 
+    start, 
+    psize, 
+    sort   
+  }))
+} // array.slice(page_number * page_size, (page_number + 1) * page_size)
+
 
   /**
    * Sort user details from the server
@@ -102,7 +107,7 @@ export class PostsSandbox extends Sandbox {
    */
   public releaseItem(): void {
     // console.log("releaseItem");
-    this.store$.dispatch(new PostActions.LoadPostsAction({}))
+    this.store$.dispatch(new PostActions.LoadPostsAction(new LoadItems()))
 
     // console.log("Item release !!!");
     // this.router.navigate(['/admin-panel/users/list']);

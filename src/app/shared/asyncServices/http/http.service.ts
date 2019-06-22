@@ -57,36 +57,11 @@ export class HttpService {
   */
  protected requestInterceptor(req: Request) {
 
-  // req.headers.set("X-MEN", `Bearer Wolverine`);
-  //   req.headers.set("X-MEN",`Bearer Wolverine`);
-    
-    // if (req.url.indexOf("/login") !== -1) req.headers.set("Authorization", `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNTM0NTQzNTQzNTQzNTM0NTMiLCJleHAiOjE1MDQ2OTkyNTZ9.zG-2FvGegujxoLWwIQfNB5IT46D-xC4e8dEDYwi6aRM`);
-/* 
-    this.store$.pipe(
-      select(AuthSelectors.jwt),
-      first(),
-      map((token: string) => {
-          if (token) {
-              req.headers.set("Authorization", `Bearer ${token}`);
-              req.withCredentials = true;
-          } else {
-              console.warn(`Invalid token!!! Cannot use token "${token}".`);
-          }
-      }),
-      catchError((err, source) => this.responseHandler.onCatch(err, source))
-    );
-
- */    
     const token = localStorage.getItem("jwtoken"); 
     if (token) {
       req.headers.set("Authorization", `Bearer ${token}`);
       req.withCredentials = true;
-    }
-
-    // if (req.url.indexOf("/admin-panel") !== -1) req.headers.set("ADMIN-PANEL", `Bearer Administrator`);
-
-    // console.log(JSON.stringify(req));
-    
+    }    
     return req;
   }
 

@@ -21,8 +21,7 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
-    this.appSandbox.setupLanguage();
-    
+    this.appSandbox.setupLanguage();  
     // Load user from local storage into redux state
     // this.appSandbox.loadUser();
     this.registerEvents();

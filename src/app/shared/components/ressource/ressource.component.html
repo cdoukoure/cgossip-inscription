@@ -1,0 +1,39 @@
+<div class="container">
+    <img *ngIf="ressourceType === 'image'" [src]="sanitizer.bypassSecurityTrustResourceUrl(ressource)">
+    <div *ngIf="ressourceType === 'video'" class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]="sanitizer.bypassSecurityTrustResourceUrl(ressource)"></iframe>
+    </div>
+    <img *ngIf="ressourceType === '' && defaultType && defaultType === 'image'" [src]="sanitizer.bypassSecurityTrustResourceUrl(default)"> 
+    <div *ngIf="canVideo && ressourceType === '' && defaultType && defaultType === 'video'" class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" [src]="sanitizer.bypassSecurityTrustResourceUrl(default)"></iframe>
+    </div>   
+    <div class="video-form">
+        <mat-form-field *ngIf="videoUrlToggled" [floatLabel]="true" class="video-url">
+            <input matInput type="text" [(ngModel)]="videoUrl" placeholder="URL de la video" autocomplete="off" />
+        </mat-form-field>
+        <button *ngIf="videoUrlToggled" class="btn btn-sm btn-round btn-danger" (click)="setVideoUrl()">
+            <i class="material-icons">movies</i> Valider
+        </button>
+        <button *ngIf="videoUrlToggled" class="btn btn-sm btn-round btn-default" (click)="toggleVideoUrl()">
+            <i class="material-icons">close</i> Annuler
+        </button>
+    </div>
+    <button *ngIf="(ressourceType === 'image' || ressourceType === 'video') && ressource !== ''"
+        class="btn btn-round  btn-just-icon btn-danger btn-close" (click)="clearMedia()">
+        <i class="material-icons">close</i>
+    </button>
+    <label *ngIf="(!canVideo && ressource === '') || (!videoUrlToggled && ressourceType !== 'image' && ressourceType !== 'video')"
+        class="btn btn-round btn-just-icon btn-success btn-image">
+        <i class="material-icons">image</i>
+        <input #fileInput type="file" (change)="onFileChange($event)" hidden />
+    </label>
+    <!-- <button *ngIf="canVideo && !videoUrlToggled && ressourceType !== 'image' && ressourceType !== 'video'"
+        type="button" class="btn btn-round btn-just-icon btn-warning btn-video" (click)="toggleVideoUrl()">
+        <i class="material-icons">movies</i>
+    </button> -->
+    <label *ngIf="canVideo && !videoUrlToggled && ressourceType !== 'image' && ressourceType !== 'video'"
+        class="btn btn-round btn-just-icon btn-warning btn-video">
+        <i class="material-icons">movies</i>
+        <input #fileInput2 type="file" (change)="onFileChange($event, true)" hidden />
+    </label>
+</div>

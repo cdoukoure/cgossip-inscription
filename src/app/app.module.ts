@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule, APP_INITIALIZER, enableProdMode } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Component }  from '@angular/core';
@@ -12,7 +12,7 @@ import {
   RequestOptions,
   XHRBackend,
   Http
-}                              from '@angular/http';
+} from '@angular/http';
 
 // Third party libraries
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -24,6 +24,8 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+
+import environment from '../config/env.json';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from '@shared/components/components.module';
@@ -69,10 +71,8 @@ import {
 // Public page
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 
-import { environment } from '../environments/environment';
 import { TranslationService } from './shared/translation/translation.service';
-import { TextareaAutoHeightDirective } from './shared/directives/textarea-auto-height.directive';
-import { DateTimePickerDirective } from './shared/directives/date-time-picker.directive';
+
 
 /**
  * Calling functions or calling new is not supported in metadata when using AoT.
@@ -112,6 +112,7 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
       }
     }),
+
     SimpleNotificationsModule.forRoot(),
     
     SweetAlert2Module.forRoot({
@@ -137,9 +138,31 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     // Store
     StateModule.forRoot(),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.env === "development"}),
  ],
-  declarations: [
+ providers: [
+  AuthGuard,
+  CanDeactivateGuard,
+  ConfigService,
+  {
+    provide: APP_INITIALIZER,
+    useFactory: configServiceFactory,
+    deps: [ConfigService], 
+    multi: true
+  },
+  TranslationService,
+  {
+    provide: APP_INITIALIZER,
+    useFactory: translationServiceFactory,
+    deps: [TranslationService], 
+    multi: true
+  }
+],
+declarations: [
+    // TextareaAutoHeightDirective,
+    // DateTimePickerDirective,
+    // InfiniteScrollerDirective,
+
     AppComponent,
 
     CreativeTimAngularAdminFooter,
@@ -153,31 +176,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     LandingPageComponent,
 
     PageContentComponent,
-
-    TextareaAutoHeightDirective,
-    DateTimePickerDirective,
   ],
-  providers: [
-    AuthGuard,
-    CanDeactivateGuard,
-    ConfigService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configServiceFactory,
-      deps: [ConfigService], 
-      multi: true
-    },
-    TranslationService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: translationServiceFactory,
-      deps: [TranslationService], 
-      multi: true
-    },
-    // provider used to create fake backend
-    // fakeBackendProvider
-    // { provide: Window, useValue: window },
-    // { provide: 'intlTelInput', useValue: window['intlTelInput']() }
+  exports: [
+    // InfiniteScrollerDirective,
   ],
   bootstrap: [AppComponent]
 })

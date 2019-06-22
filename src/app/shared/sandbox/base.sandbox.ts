@@ -6,13 +6,14 @@ import { localeDateString } from '@shared/utility';
 import {
   AppState,
   AuthSelectors,
+  AuthActions,
   SettingsStoreSelectors
 } from '@shared/store';
 
 export abstract class Sandbox {
 
-  // public loggedUser$: Observable<any> = this.store$.select(AuthSelectors.loggedInUser);
-  // public culture$:    Observable<any> = this.store$.select(SettingsStoreSelectors.settingsCulture);
+  public loggedUser$: Observable<any> = this.store$.select(AuthSelectors.loggedInUser);
+  public culture$:    Observable<any> = this.store$.select(SettingsStoreSelectors.settingsCulture);
   public culture:     string;
 
   constructor(
@@ -24,7 +25,7 @@ export abstract class Sandbox {
    *
   public loadUser(): void {
     var user = JSON.parse(localStorage.getItem('currentUser'));
-    this.store$.dispatch(new authActions.AddUserAction(new User(user)));
+    this.store$.dispatch(new AuthActions.AddUserAction(new User(user)));
 
     this.store$.dispatch(new AuthActions.LoadRequestAction());
   }

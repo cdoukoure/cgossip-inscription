@@ -46,7 +46,6 @@
                     </div>
                     <div class="card-body">
                         <cdk-virtual-scroll-viewport [itemSize]="1" style="min-height: 600px;width:100%;">
-
                             <div *cdkVirtualFor="let item of sandBox.waitingItems$ | async">
                                 <post-card [largeFormat]="true" [item]="item"
                                     [author]="(sandBox.userEntities$ | async)[item.author]"

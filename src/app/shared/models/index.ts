@@ -1,3 +1,6 @@
+// Params for API
+export * from './router/params.model'
+
 // Auth
 export * from './auth/logged-user.model';
 export * from './auth/login-form.model';

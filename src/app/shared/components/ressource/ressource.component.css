@@ -1,0 +1,53 @@
+/* Container needed to position the button. Adjust the width as needed */
+.container {
+    position        : relative;
+    margin: 15px auto;
+    padding: 0!important;
+    width           : 100%;
+    min-height      : 150px;
+    background-size : cover;
+    background-image: url('http://placehold.it/32x32');
+    background-color: #cccccc;
+}
+
+/* Make the image responsive */
+.container img {
+    width : 100%;
+    min-height: 100%;
+    height: auto;
+}
+
+/* Style the button and place it in the middle of the container/image */
+.container .btn-image {
+    position     : absolute;
+    top          : 30%;
+    left         : 50%;
+    transform    : translate(-50%, -40%);
+    -ms-transform: translate(-50%, -40%);
+}
+
+.container .btn-video {
+    position     : absolute;
+    top          : 70%;
+    left         : 50%;
+    transform    : translate(-50%, -60%);
+    -ms-transform: translate(-50%, -60%);
+}
+
+.container .btn-close {
+    position     : absolute;
+    top          : 40px;
+    right         : 10px;
+    transform    : translate(-10%, -90%);
+    -ms-transform: translate(-10%, -90%);
+}
+
+.container .video-form {
+    position     : absolute;
+    margin: 0 auto;
+    top: 20%;
+    left: 15%;
+    width: 70%;
+    min-width: 100px;
+    text-align: center;
+}

@@ -74,7 +74,7 @@ export class LoadUsersFailAction implements ActionWithPayload {
  */
 export class SortUsersAction implements ActionWithPayload {
   type = ActionTypes.SORT_ITEMS;
-  constructor(public payload: {sort: any}) {}
+  constructor(public payload: any = null) {}
 }
 
 export class SortUsersSuccessAction implements ActionWithPayload {

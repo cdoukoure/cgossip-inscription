@@ -33,8 +33,8 @@ export class AppSandbox extends Sandbox {
     let selectedCulture = localization.languages.filter(lang => lang.code === selectedLang)[0].culture;
 
     this.translate.use(selectedLang);
-    // this.store$.dispatch(new SettingsStoreActions.SetLanguageAction(selectedLang));
-    // this.store$.dispatch(new SettingsStoreActions.SetCultureAction(selectedCulture));
+    this.store$.dispatch(new SettingsStoreActions.SetLanguageAction(selectedLang));
+    this.store$.dispatch(new SettingsStoreActions.SetCultureAction(selectedCulture));
   }
 
   /**

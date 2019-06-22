@@ -1,6 +1,6 @@
 {
   "api": {
-    "baseUrl": "http://localhost:8080/api"
+    "baseUrl": "https://dev.aldizconsulting.com"
   },
 
   "paths": {

@@ -25,12 +25,13 @@ export class UsersApiClient extends HttpService {
    * Retrieves all items
    */
   @GET("/admin/users") // param dans le payload
-  // @Adapter(UsersService.gridAdapter)  
   public loadItems(
-    @Body filter : any = null, // eq [{'key':'firstname', 'value':'Atteke'},{'key':'country', 'value':'civ'}, ...]
-    @Body pindex : number = 0, 
-    @Body psize : number = 3000, 
-    @Body sort : any = null, // sort for user - role type('fan','celebrity' ), for Posts - my or all
+    @Body payload?: { 
+      filter: any, // eq [{'key':'firstname', 'value':'Atteke'},{'key':'country', 'value':'civ'}, ...] 
+      pindex: number,
+      psize: number,
+      sort: any // sort for user - role type('fan','celebrity' ), for Posts - my or all
+    }
   ): Observable<any> { return null; };
 
   /**

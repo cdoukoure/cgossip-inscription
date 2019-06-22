@@ -10,8 +10,10 @@
                     <div class="card-body">
                         <form novalidate [ngrxFormState]="sandBox.profilFormState$ | async">
                             <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <img width="150" height="150" style="display: block;margin:5px auto;"
+                                <div class="col-md-8 offset-md-2 text-center">
+                                    <ressource [canVideo]="false" [ressourceType]="'image'" [ressource]="(sandBox.profilFormState$ | async).value.avatar"
+                                    [defaultType]="'image'" [default]="(sandBox.profilFormState$ | async).value.avatarOri" (onChange)="onMediaChange($event)"></ressource>
+                                    <!-- <img width="150" height="150" style="display: block;margin:5px auto;"
                                         *ngIf="!(sandBox.profilFormState$ | async).value.avatar || (sandBox.profilFormState$ | async).value.avatar ===''"
                                         [src]="(sandBox.profilFormState$ | async).value.avatarOri" />
                                     <img width="150" height="150" style="display: block;margin:5px auto;"
@@ -28,7 +30,7 @@
                                         class="btn btn-sm btn-link btn-rose">
                                         <i class="material-icons">close</i>
                                         Retirer l'image
-                                    </button>
+                                    </button> -->
                                     <!-- <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                         <div class="fileinput-new thumbnail img-circle img-raised" style="width: 200px; height: 200px;">
                                             <img [src]="(sandBox.profilFormState$ | async ).value.avatar" width="200px" height="150px" alt="...">

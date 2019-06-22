@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthModule }  from './auth/auth.module'
 
-
 // Layouts 
 import { 
   AdminLayoutComponent as CreativeTimAngularAdminLayout 

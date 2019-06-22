@@ -21,7 +21,7 @@ const DEFAULT_SCROLL_POSITION: ScrollPosition = {
 };
 
 @Directive({
-  selector: '[appInfiniteScroller]'
+  selector: '[infiniteScroller]'
 })
 export class InfiniteScrollerDirective implements AfterViewInit {
 
@@ -40,7 +40,7 @@ export class InfiniteScrollerDirective implements AfterViewInit {
   immediateCallback;
 
   @Input()
-  scrollPercent = 70;
+  scrollPercent = 90;
 
   constructor(private elm: ElementRef) { }
 

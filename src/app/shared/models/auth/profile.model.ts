@@ -18,7 +18,7 @@ export class Profile implements IProfile {
   // public country:     string | null;
 
   constructor(user?: any) {
-    this.avatar     = '';
+    this.avatar     = user ? user.avatar : '';
     this.avatarOri  = user ? user.avatar : '';
     this.pseudo     = user ? user.pseudo : null;
     this.firstname  = user ? user.firstname : '';

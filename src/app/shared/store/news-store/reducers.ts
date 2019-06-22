@@ -108,7 +108,7 @@ export function reducer(state = initialState, actions: Actions): State {
   const postValidateAndUpdateFormState = updateGroup<Post>(
     { // Validation part
       // id: validate(required),
-      author: validate(required),
+      // author: validate(required),
       media: (state, parentState) => {
         if (state.value.type === 'video') {
           return updateGroup<Media>(state, {
@@ -117,10 +117,15 @@ export function reducer(state = initialState, actions: Actions): State {
           })
         } else {
           return updateGroup<Media>(state, {
-            type: validate(required)
+            type: validate(minLength(0))
           })
         }
       },
+      /*media: (state, parentState) => {
+        return updateGroup<Media>(state, {
+          type: validate(minLength(0))
+        })
+      },*/ 
       title: validate([required, maxLength(200), minLength(2)]),
       description: validate(required, minLength(2)),
       content: validate(required, minLength(2)),
@@ -191,8 +196,9 @@ export function reducer(state = initialState, actions: Actions): State {
     case ActionTypes.LOAD_ITEMS_SUCCESS: {
       // console.log('Post reducer LOAD_ITEMS_SUCCESS');
       // console.log(actions.payload.items);
+      //return featureAdapter.addMany(actions.payload.items, {
       return featureAdapter.addAll(actions.payload.items, {
-        ...state,
+          ...state,
         formState: createFormGroupState<Post>(NEWS_EDIT_FORM, new Post()),
         isLoading: false,
         message: null
@@ -228,7 +234,9 @@ export function reducer(state = initialState, actions: Actions): State {
     } 
     */
 
+    case ActionTypes.DO_TREATMENT:
     case ActionTypes.CREATE_ITEM:
+    case ActionTypes.UPLOAD_RESSOURCE:
     case ActionTypes.UPDATE_ITEM:
     case ActionTypes.DELETE_ITEM: {
       return {
@@ -266,53 +274,51 @@ export function reducer(state = initialState, actions: Actions): State {
 
     case ActionTypes.UPDATE_ITEM_SUCCESS: {
 
-      // if ((actions.payload.action === 'validation' || actions.payload.action === 'refusal') && actions.payload.id) {
-      //   // console.log("Post reducer UPDATE_ITEM_SUCCESS validation")
-      //   let itemToValidate: any;
-      //   itemToValidate = { ...state.entities[actions.payload.id] }
+      if ((actions.payload.action === 'validation' || actions.payload.action === 'refusal') && actions.payload.id) {
+        // Used by PostCardComponent
+        let itemToValidate: any;
+        itemToValidate = { ...state.entities[actions.payload.id] }
 
-      //   switch (actions.payload.action) {
-      //     case 'refusal':
-      //       itemToValidate.state = 'refused'
-      //       break;
-      //     case 'validation':
-      //       itemToValidate.state = 'validated'
-      //       break;
-      //     default:
-      //       break;
-      //   }
-      //   return {
-      //     ...state,
-      //     entities: {
-      //       ...state.entities,
-      //       [actions.payload.id]: itemToValidate
-      //     },
-      //     formState: state.formState.value.id ? createFormGroupState<Post>(NEWS_EDIT_FORM, new Post(itemToValidate)) : state.formState,
-      //     isLoading: false,
-      //     message: actions.payload.msg
-      //   }
+        switch (actions.payload.action) {
+          case 'refusal':
+            itemToValidate.state = 'refused'
+            break;
+          case 'validation':
+            itemToValidate.state = 'validated'
+            break;
+          default:
+            break;
+        }
+        return {
+          ...state,
+          entities: {
+            ...state.entities,
+            [actions.payload.id]: itemToValidate
+          },
+          isLoading: false,
+        }
 
-      //   /* return featureAdapter.updateOne(itemToValidate, {
-      //     ...state,
-      //     message: actions.payload.msg
-      //   }); */
+        /* return featureAdapter.updateOne(itemToValidate, {
+          ...state,
+          message: actions.payload.msg
+        }); */
 
-      // } else {
+      } else { // Used by detail
 
-      let viewmode;
-      if (actions.payload.item.state === 'validated' || actions.payload.item.state === 'refused') {
-        viewmode = 'view'
-      } else viewmode = 'edition'
+        let viewmode;
+        if (actions.payload.item.state === 'validated' || actions.payload.item.state === 'refused') {
+          viewmode = 'view'
+        } else viewmode = 'edition'
 
-      return featureAdapter.updateOne(actions.payload.item, {
-        ...state,
-        formState: createFormGroupState<Post>(NEWS_EDIT_FORM, new Post(actions.payload.item)),
-        isLoading: false,
-        viewMode: viewmode,
-        message: actions.payload.msg
-      });
+        return featureAdapter.updateOne(actions.payload.item, {
+          ...state,
+          formState: createFormGroupState<Post>(NEWS_EDIT_FORM, new Post(actions.payload.item)),
+          isLoading: false,
+          viewMode: viewmode,
+          message: actions.payload.msg
+        }); 
 
-      // }
+      }
     }
     /* case ActionTypes.UPDATE_ITEM_SUCCESS:{
       return {
@@ -342,13 +348,16 @@ export function reducer(state = initialState, actions: Actions): State {
       };
     } */
 
+
     case ActionTypes.SORT_ITEMS_FAIL:
     case ActionTypes.LOAD_ITEMS_FAIL:
     case ActionTypes.GET_ITEM_SUCCESS:
     case ActionTypes.GET_ITEM_FAIL:
     case ActionTypes.CREATE_ITEM_FAIL:
     case ActionTypes.UPDATE_ITEM_FAIL:
-    case ActionTypes.DELETE_ITEM_FAIL: {
+    case ActionTypes.DELETE_ITEM_FAIL: 
+    case ActionTypes.UPLOAD_RESSOURCE_FAIL: 
+    {
       return {
         ...state,
         isLoading: false,

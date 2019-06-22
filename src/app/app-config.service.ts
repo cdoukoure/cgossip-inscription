@@ -19,7 +19,7 @@ import test from '../config/test.json';
 export class ConfigService {
 
   private config: Object 
-  private env: Object
+  public env: Object
 
   constructor(private http: Http) {}
 

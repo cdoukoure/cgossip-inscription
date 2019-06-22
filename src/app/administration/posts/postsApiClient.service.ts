@@ -10,7 +10,7 @@ import {
 
 import { Observable }       from 'rxjs/Observable';
 
-import { Post } from '@app/shared/models';
+import { Post, LoadItems } from '@app/shared/models';
 
 @Injectable({
   providedIn: "root"
@@ -20,16 +20,8 @@ export class PostsApiClient extends HttpService {
   /**
    * Retrieves all items
    */
-  @GET("/admin/posts") // param dans le payload
-  // @Adapter(PostsService.gridAdapter)  
-  public loadItems(
-    @Body filter : any = null, // eq [{'key':'firstname', 'value':'Atteke'},{'key':'country', 'value':'civ'}, ...]
-    @Body pindex : number = 0, 
-    @Body psize : number = 3000, 
-    @Body sort : any = null, // sort for user - role type('fan','celebrity' ), for Posts - my or all
-  ): Observable<any> { 
-    return null; 
-  };
+  @POST("/admin/posts") 
+  public loadItems(@Body payload: LoadItems): Observable<any> { return null; };
 
   /**
    * Retrieve single item for details by a given id

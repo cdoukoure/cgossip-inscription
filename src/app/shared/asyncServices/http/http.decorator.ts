@@ -77,6 +77,22 @@ export function Headers(headersDef: any) {
 }
 
 /**
+ * Set custom headers for a REST method
+ * @param {string} baseUrlDef - custom baseUrl
+ */
+export function SpecialBaseUrl(baseUrlDef: string) {
+  return function(target: HttpService, propertyKey: string, descriptor: any) {
+    
+    var UrlMatcher = new RegExp(/(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi);
+
+    if (baseUrlDef.match(UrlMatcher)) descriptor.SpecialBaseUrl = baseUrlDef;
+
+    return descriptor;
+
+  };
+}
+
+/**
  * Defines the media type(s) that the methods can produce
  * @param MediaType producesDef - MediaType to be sent
  */
@@ -103,6 +119,7 @@ export function Adapter(adapterFn: Function) {
 /* *********************************************
  * Parameter decorators
  * *********************************************/
+
 
 /**
  * Path variable of a method's url, type: string

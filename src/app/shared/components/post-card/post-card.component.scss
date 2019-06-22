@@ -48,7 +48,8 @@
 
   .post-header {
 
-    h4 {
+    h4,
+    h5 {
       color : darkslategray;
       margin: 0 0.8rem;
     }
@@ -77,6 +78,12 @@
 
     .card-description {
       display: block;
+
+      p {
+        font-size:.85rem;
+        max-height: 100px;
+        overflow: hidden;
+      }
     }
   }
 
@@ -102,7 +109,7 @@
     }
   }
 
-  .post-media {
+  .ressource {
     width     : 100%;
     background: transparent;
   }

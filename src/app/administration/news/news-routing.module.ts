@@ -24,6 +24,8 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
+// import { InfiniteScrollerDirective } from '@shared/directives/infiniteScroll.directive';
+
 import { ComponentsModule } from '@app/shared/components/components.module';
 
 import { ListComponent } from './list/list.component';
@@ -40,6 +42,7 @@ export const routes: Routes = [
 
 @NgModule({
   declarations: [
+    // InfiniteScrollerDirective,
     ListComponent, 
     DetailsComponent, 
     EditFormComponent,
@@ -72,6 +75,7 @@ export const routes: Routes = [
   ],
   exports: [
     // PostCardComponent,
+    // InfiniteScrollerDirective,
   ],
 })
 export class NewsRoutingModule { }

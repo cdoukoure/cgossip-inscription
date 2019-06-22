@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../creativetim-sidebar/creativetim-sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
-// import { AuthSandbox } from '@app/auth/auth.sandbox';
+import { AuthSandbox } from '@app/auth/auth.sandbox';
 
 @Component({
   selector: 'app-creativetim-navbar',
@@ -17,7 +17,7 @@ export class CreativetimNavbarComponent implements OnInit {
     private sidebarVisible: boolean;
 
     constructor(
-        // public sandBox: AuthSandbox,
+        public sandBox: AuthSandbox,
         location: Location,  
         private element: ElementRef, 
         private router: Router

@@ -10,6 +10,8 @@ import { UtilService } from '@app/shared/utility';
 import { selectAllItems } from './selectors';
 import { Post } from '@app/shared/models';
 import { AppState } from '..';
+import { SetValueAction } from 'ngrx-forms';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class NewsEffects {
@@ -18,7 +20,8 @@ export class NewsEffects {
     private notifyService: UtilService,
     private store$: Store<AppState.State>,
     private actions$: Actions,
-    private newsApiClient: NewsApiClient
+    private newsApiClient: NewsApiClient,
+    private http: HttpClient,
     ) {
       // super(formActions$);
     }
@@ -31,13 +34,15 @@ export class NewsEffects {
     ofType<actions.LoadNewsAction>(
       actions.ActionTypes.LOAD_ITEMS
     ),
+    /*
     withLatestFrom(
       //this.store$.select(state => state.News.News)
       this.store$.pipe(select(selectAllItems))
     ),
-    switchMap(() =>
+    */
+    switchMap(action =>
       this.newsApiClient
-      .loadItems()   
+      .loadItems(action.payload)   
       .pipe(
         map(res => {
           // console.log("Effect LoadNewsSuccessAction");
@@ -48,7 +53,7 @@ export class NewsEffects {
           this.notifyService.showNotification('top', 'center', 
             'Erreur!!! Veuillez réessayer plutard.', 
             'danger');
-            return observableOf(new actions.LoadNewsFailAction({ msg }))
+          return observableOf(new actions.LoadNewsFailAction({ msg }))
         })
       )
     )
@@ -159,6 +164,100 @@ export class NewsEffects {
             return observableOf(new actions.DeleteNewsFailAction({msg: res.msg}))
           })
 	      ) 
+    )
+  );
+
+  /**
+   * Delete effect
+   */
+  @Effect()
+  doTreatment$: Observable<Action> = this.actions$.pipe(
+    ofType<actions.DoNewsTreatment>(
+      actions.ActionTypes.DO_TREATMENT
+    ),
+    switchMap(action => 
+        this.newsApiClient
+	      .treatment({id: action.payload.id, action: action.payload.action})
+	      .pipe(
+	        map( res => { 
+            if (res.code == '200') {
+              this.notifyService.showNotification('top', 'right', res.msg, 'success');
+              return new actions.UpdateNewsSuccessAction( {id: action.payload.id, action: action.payload.action} );  
+            } else {
+              this.notifyService.showNotification('top', 'right', res.msg, 'danger');
+              return new actions.UpdateNewsFailAction({msg: res.msg});
+            }
+          }),
+          catchError( res => {
+            this.notifyService.showNotification('top', 'right', 
+              'Erreur!!! Veuillez réessayer plutard. Message systême:' + res.msg,
+              'danger');
+            return observableOf(new actions.UpdateNewsFailAction({msg: res.msg}))
+          })
+	      ) 
+    )
+  );
+
+  /**
+   * Upload Video
+   */
+  @Effect()
+  doUploadBeforeEdit$: Observable<Action> = this.actions$.pipe(
+    ofType<actions.UploadNewsRessource>(
+      actions.ActionTypes.UPLOAD_RESSOURCE
+    ),
+    switchMap(action => 
+      this.http.post<any>("https://stream.aldizconsulting.com:8443", action.payload.formData)
+      .pipe(
+        map( res => { 
+          if (res.url && res.url !== '') {
+            this.notifyService.showNotification('top', 'right', res.msg, 'success');
+            // new actions.UploadNewsRessourceSuccess( { ressourceUrl: res.url } ); 
+            new SetValueAction("NEWS_EDIT_FORM.media.url", res.url);
+            var item = action.payload.item;
+            var action = action.payload.action;
+            var payload = {item, action} 
+            if (item.id) {
+              return new actions.UpdateNewsAction( payload );
+            } else {
+              return new actions.CreateNewsAction( payload );
+            }
+          } else {
+            this.notifyService.showNotification('top', 'right', res.msg, 'danger');
+            return new actions.UploadNewsRessourceFail({ msg: res.msg });
+          }
+        }),
+        catchError( res => {
+          this.notifyService.showNotification('top', 'right', res.msg, 'danger');
+          return observableOf(new actions.UploadNewsRessourceFail({ msg: res.msg }));
+        })
+      )
+        /*this.newsApiClient
+	      .upload(action.payload.formData)
+	      .pipe(
+	        map( res => { 
+            if (res.code == '200') {
+              this.notifyService.showNotification('top', 'right', res.msg, 'success');
+              // new actions.UploadNewsRessourceSuccess( { ressourceUrl: res.url } ); 
+              new SetValueAction("NEWS_EDIT_FORM.media.url", res.url);
+              var item = action.payload.item;
+              var action = action.payload.action;
+              var payload = {item, action} 
+              if (item.id) {
+                return new actions.UpdateNewsAction( payload );
+              } else {
+                return new actions.CreateNewsAction( payload );
+              }
+            } else {
+              this.notifyService.showNotification('top', 'right', res.msg, 'danger');
+              return new actions.UploadNewsRessourceFail({ msg: res.msg });
+            }
+          }),
+          catchError( res => {
+            this.notifyService.showNotification('top', 'right', res.msg, 'danger');
+            return observableOf(new actions.UploadNewsRessourceFail({ msg: res.msg }));
+          })
+	      ) */
     )
   );
 

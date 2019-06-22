@@ -36,7 +36,7 @@ export class UsersEffects {
       //this.store$.select(state => state.users.users)
       this.store$.pipe(select(selectAllItems))
     ),
-    switchMap(action =>
+    switchMap(() =>
       this.usersApiClient
       .loadItems()
       .pipe(

@@ -30,6 +30,8 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { ListComponent } from './list/list.component';
 import { DetailsComponent } from './details/details.component';
 import { ComponentsModule } from '@app/shared/components/components.module';
+import  { DirectivesModule } from '@shared/directives'
+// import { InfiniteScrollerDirective } from '@app/shared/directives/infiniteScroll.directive';
 // import { PostCardComponent } from '@app/shared/components/post-card/post-card.component';
 // import { PostCardComponent } from '@shared/components/post-card/post-card.component';
 
@@ -70,6 +72,8 @@ export const routes: Routes = [
     
     SweetAlert2Module,
 
+    DirectivesModule,
+    
     ComponentsModule,
   ],
   exports: [

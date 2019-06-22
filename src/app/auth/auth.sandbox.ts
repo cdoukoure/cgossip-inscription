@@ -111,14 +111,14 @@ export class AuthSandbox extends Sandbox {
   public profileUpdate(photo?: any): void {
     let subscription = this.profilFormState$.subscribe(fs => {
       if (fs.isValid) {
-        let newItem = { ...fs.value }
+        /* et newItem = { ...fs.value }
         if (photo) {
           newItem.avatar = photo
         } else {
           newItem.avatar = ""
         }
-        console.log(newItem);
-        this.store$.dispatch(new AuthActions.DoProfileUpdateAction(newItem))
+        console.log(newItem); */
+        this.store$.dispatch(new AuthActions.DoProfileUpdateAction(fs.value))
       }
     });
     subscription.unsubscribe();
@@ -139,7 +139,7 @@ export class AuthSandbox extends Sandbox {
   public passwordUpdate() {
     let subscription = this.passwordFormState$.subscribe(fs => {
       if (fs.isValid) {
-        this.store$.dispatch(new AuthActions.DoPasswordUpdateAction(new Password(fs.value)))
+        this.store$.dispatch(new AuthActions.DoPasswordUpdateAction(fs.value))
       }
     });
     subscription.unsubscribe();

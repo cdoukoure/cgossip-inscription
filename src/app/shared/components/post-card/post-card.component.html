@@ -9,9 +9,10 @@
         </div>
         <div class="post-header">
             <h4>{{item.title}}</h4>
+            <span>{{ item.lastmodified }}</span>
             <div class="card-description" *ngIf="!showDetail">
-                <p *ngIf="largeFormat">{{ item.description }}</p>
-                <button (click)="onEmitEvent('getItem')" class="btn btn-rose btn-link btn-sm pull-right">Voir la
+                <p>{{ item.description }}</p>
+                <button *ngIf="!largeFormat" (click)="onEmitEvent('getItem')" class="btn btn-rose btn-link btn-sm pull-right">Voir la
                     fiche</button>
                 <!-- <button mat-raised-button *ngIf="largeFormat" type="button" matTooltip="Voir plus" [matTooltipPosition]="'above'"
                     (click)="onShowMore()" class="btn btn-primary btn-link btn-sm btn-just-icon">
@@ -27,13 +28,17 @@
                     </button>
                 </p>
             </div> -->
-            <div class="post-media" *ngIf="largeFormat">
+
+
+            <div class="ressource" *ngIf="largeFormat">
                 <img *ngIf="item.media.type === 'image'" class="img-fluid" [src]="sanitizer.bypassSecurityTrustResourceUrl(item.media.url)" />
                 <div *ngIf="item.media.type === 'video'" class="embed-responsive embed-responsive-1by1">
                     <iframe class="embed-responsive-item"
                         [src]="sanitizer.bypassSecurityTrustResourceUrl(item.media.url)"></iframe>
                 </div>
             </div>
+
+
         </div>
         <!-- <div class="card-footer">
             <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like
@@ -43,9 +48,11 @@
             <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
         </div> -->
         <div class="post-footer" *ngIf="item.state === 'draft' || item.state === 'waiting'">
+            <button (click)="onEmitEvent('getItem')" class="btn btn-round btn-default btn-sm">
+                Voir la fiche
+            </button>
             <button *ngIf="item.id && item.state === 'draft'" mat-raised-button type="button"
-                matTooltip="Publier la nouvelle" [matTooltipPosition]="'above'" [swal]="{title: 'Publier', 
-                text: 'Êtes-vous sûr de vouloir publier cette publication?',
+                matTooltip="Publier la nouvelle" [matTooltipPosition]="'above'" [swal]="{title: 'Publier', text: 'Êtes-vous sûr de vouloir publier cette publication?',
                 width: 400,
                 showCloseButton: true,
                 showCancelButton: true,

@@ -31,17 +31,16 @@ export class PostsEffects {
     ofType<actions.LoadPostsAction>(
       actions.ActionTypes.LOAD_ITEMS
     ),
+    /*
     withLatestFrom(
-      //this.store$.select(state => state.posts.posts)
       this.store$.pipe(select(selectAllItems))
     ),
-    switchMap(() =>
+    */
+    switchMap(action =>
       this.postsApiClient
-      .loadItems()   
+      .loadItems(action.payload)   
       .pipe(
         map(res => {
-          // console.log("Effect LoadPostsSuccessAction");
-          // console.log(res);
           return new actions.LoadPostsSuccessAction( { items: res.data.posts } );
         }),
         catchError(msg => {

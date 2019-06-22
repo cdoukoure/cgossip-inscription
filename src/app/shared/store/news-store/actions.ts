@@ -30,7 +30,11 @@ export const ActionTypes = {
   DELETE_ITEM_SUCCESS:         type('[News] Delete new success'),
   DELETE_ITEM_FAIL:            type('[News] Delete new fail'),
   // password Update
-  DO_TREATMENT:                     type('[News] Do Treatment //Validation task'),
+  DO_TREATMENT:                type('[News] Do Treatment //Validation task'),
+
+  UPLOAD_RESSOURCE:                type('[News] Upload ressource'),
+  UPLOAD_RESSOURCE_SUCCESS:        type('[News] Upload ressource success'),
+  UPLOAD_RESSOURCE_FAIL:           type('[News] Upload ressource fail'),
 };
 
 /**
@@ -38,15 +42,13 @@ export const ActionTypes = {
  */
 export class LoadNewsAction implements ActionWithPayload {
   readonly type = ActionTypes.LOAD_ITEMS;
-  constructor(public payload: any = null) {
-    // console.log("Dispatch LoadNewsAction");
-  }
-} // api: admin/news
+  constructor(public payload: any = null) {}
+}
 
 export class LoadNewsSuccessAction implements ActionWithPayload {
   readonly type = ActionTypes.LOAD_ITEMS_SUCCESS;
   constructor(public payload: {  items: Post[] }) {}
-} // api: 
+}
 
 export class LoadNewsFailAction implements ActionWithPayload {
   readonly type = ActionTypes.LOAD_ITEMS_FAIL;
@@ -157,6 +159,20 @@ export class DoNewsTreatment implements ActionWithPayload {
   constructor(public payload: { id: any, action:any,  }) { }
 } // action:'creation', 'modification', 'submission', 'validation', 'refusal', 'deletion'
 
+export class UploadNewsRessource implements ActionWithPayload {
+  type = ActionTypes.UPLOAD_RESSOURCE;
+  constructor(public payload: { formData: any, item: any, action: any }) { }
+} 
+
+export class UploadNewsRessourceSuccess implements ActionWithPayload {
+  readonly type = ActionTypes.UPLOAD_RESSOURCE_SUCCESS;
+  constructor(public payload: { ressourceUrl: any } ) {}
+}
+
+export class UploadNewsRessourceFail implements ActionWithPayload {
+  readonly type = ActionTypes.UPLOAD_RESSOURCE_FAIL;
+  constructor(public payload: any = null) {}
+}
 
 
 export type Actions
@@ -179,4 +195,7 @@ export type Actions
   | DeleteNewsSuccessAction
   | DeleteNewsFailAction
   | DoNewsTreatment
+  | UploadNewsRessource
+  | UploadNewsRessourceSuccess
+  | UploadNewsRessourceFail
   ;

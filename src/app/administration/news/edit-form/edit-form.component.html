@@ -90,6 +90,13 @@
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <ressource [ressource]="(sandBox.formState$ | async).value.media.url" [ressourceType]="(sandBox.formState$ | async).value.media.type" (onChange)="onMediaChange($event)"></ressource>
+                                </div>
+                            </div>
+
+                            <!-- 
+                            <div class="row">
+                                <div class="col-md-12">
                                     <label id="example-radio-group-label">Format du media</label><br />
                                     <mat-radio-group (change)="clearMediaUrl()"
                                         [ngrxFormControlState]="(sandBox.formState$ | async).controls.media.controls.type"
@@ -98,35 +105,25 @@
                                         <mat-radio-button value="video">Video</mat-radio-button>
                                     </mat-radio-group>
                                 </div>
-                            </div>
+                            </div> 
+                            -->
 
-                            <div class="row" *ngIf="(sandBox.formState$ | async).controls.media.value.type === 'image'">
+                            <!-- <div class="row" *ngIf="(sandBox.formState$ | async).controls.media.value.type === 'image'">
                                 <div class="col-md-12 text-center" style="padding-left: 0px;padding-right: 0px;">
                                     <img width="100%" style="display: block;"
-                                        *ngIf="(!(sandBox.formState$ | async).value.media.url || (sandBox.formState$ | async).value.media.url ==='') && (sandBox.formState$ | async).value.mediaOri.url !== ''"
+                                        *ngIf="(!(sandBox.formState$ | async).value.media.url || (sandBox.formState$ | async).value.media.url ==='') && (sandBox.formState$ | async).value.mediaOri.url !== '' && (sandBox.formState$ | async).value.mediaOri.type === 'image'"
                                         [src]="(sandBox.formState$ | async).value.mediaOri.url" />
 
                                     <img width="100%" style="display: block;"
                                         *ngIf="(sandBox.formState$ | async).value.media.url !==''"
                                         [src]="(sandBox.formState$ | async).value.media.url" />
 
-                                    <label class="btn btn-sm btn-link btn-rose">
-                                        <i class="material-icons">find_in_page</i>
-                                        Selectionner une image
-                                        <input #fileInput type="file" (change)="onFileChange($event)"
-                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.media.controls.url"
-                                            hidden />
-                                    </label>
-                                    <button (click)="clearMediaUrl()"
-                                        *ngIf="(sandBox.formState$ | async).value.media.url && (sandBox.formState$ | async).value.media.url !==''"
-                                        class="btn btn-sm btn-link btn-rose">
-                                        <i class="material-icons">delete</i>
-                                        Retirer l'image
-                                    </button>
+                                     <img width="100%" style="display: block;"
+                                        [src]="(sandBox.formState$ | async).value.media.url" /> 
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="row" *ngIf="(sandBox.formState$ | async).controls.media.value.type === 'video'">
+                            <!-- <div class="row" *ngIf="(sandBox.formState$ | async).controls.media.value.type === 'video'">
                                 <div class="col-lg-12">
                                     <mat-form-field [floatLabel]="true" class="example-full-width">
                                         <input matInput type="text"
@@ -134,22 +131,54 @@
                                             placeholder="URL de la video" autocomplete="off" />
                                     </mat-form-field>
                                 </div>
-                                <div class="col-lg-12" *ngIf="(sandBox.formState$ | async).controls.media.controls.url.isValid && (sandBox.formState$ | async).controls.media.controls.url.isTouched && (sandBox.formState$ | async).value.media.url !== ''">
+                                <div class="col-lg-12"
+                                    *ngIf="(sandBox.formState$ | async).controls.media.controls.url.isValid && (sandBox.formState$ | async).controls.media.controls.url.isTouched && (sandBox.formState$ | async).value.media.url !== ''">
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <iframe class="embed-responsive-item"
                                             [src]="sanitizer.bypassSecurityTrustResourceUrl((sandBox.formState$ | async).value.media.url)"></iframe>
                                     </div>
-                                    <br/>
-                                </div>
+                                </div> 
 
-                                <div class="col-lg-12" *ngIf="(sandBox.formState$ | async).value.media.url === '' || (sandBox.formState$ | async).controls.media.controls.url.isValid === false || ((sandBox.formState$ | async).controls.media.controls.url.isValid && (sandBox.formState$ | async).controls.media.controls.url.isTouched === false)">
+                                <div class="col-lg-12"
+                                    *ngIf="(sandBox.formState$ | async).value.media.url === '' || (sandBox.formState$ | async).controls.media.controls.url.isValid === false || ((sandBox.formState$ | async).controls.media.controls.url.isValid && (sandBox.formState$ | async).controls.media.controls.url.isTouched === false)">
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <iframe class="embed-responsive-item"
                                             [src]="sanitizer.bypassSecurityTrustResourceUrl((sandBox.formState$ | async).value.mediaOri.url)"></iframe>
                                     </div>
-                                    <br/>
                                 </div>
-                            </div>
+                            </div> -->
+
+                            <!--<div class="row">
+                                <div class="col-lg-12 text-center"
+                                    *ngIf="(sandBox.formState$ | async).value.media.url !== '' || (sandBox.formState$ | async).value.mediaOri.url !== ''">
+                                    <br />
+                                    <label *ngIf="(sandBox.formState$ | async).value.media.type === 'image'"
+                                        class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">find_in_page</i>
+                                        Selectionner une image
+                                        <input #fileInput type="file" (change)="onFileChange($event)"
+                                            [ngrxFormControlState]="(sandBox.formState$ | async).controls.media.controls.url"
+                                            hidden />
+                                    </label>
+                                    <button (click)="clearMediaUrl()"
+                                    *ngIf="( (sandBox.formState$ | async).value.media.type === 'image' && (sandBox.formState$ | async).value.media.url !== '' ) || ((sandBox.formState$ | async).value.mediaOri.type === 'image' && (sandBox.formState$ | async).value.mediaOri.url !== '' )"
+                                        class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">delete</i>
+                                        Retirer l'image
+                                    </button>
+                                    <button *ngIf="( (sandBox.formState$ | async).value.media.type === 'video' && (sandBox.formState$ | async).value.media.url !== '' ) || 
+                                    ( (sandBox.formState$ | async).value.mediaOri.type === 'video' && (sandBox.formState$ | async).value.mediaOri.url !== '' && (sandBox.formState$ | async).value.media.url === '')" (click)="clearMediaUrl()" class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">delete</i>
+                                        Retirer la video
+                                    </button> 
+                                    <button *ngIf="(sandBox.formState$ | async).value.media.url !== ''
+                                    || (sandBox.formState$ | async).value.mediaOri.url !== '' "
+                                        (click)="clearMediaUrl()" class="btn btn-sm btn-link btn-rose">
+                                        <i class="material-icons">delete</i>
+                                        Retirer le media
+                                    </button>
+                                </div>
+                            </div>-->
 
                             <div class="row">
                                 <div class="col-lg-12">
@@ -171,7 +200,7 @@
                                 </div>
                             </div>
 
-                            <div class="row" *ngIf="sandBox.isLoading$ | async">
+                            <div class="row" *ngIf="(sandBox.isLoading$ | async) || uploadStatus">
                                 <div class="col-md-12" style="height: 20px;">
                                     <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
                                     </mat-progress-bar>

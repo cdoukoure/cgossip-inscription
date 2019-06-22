@@ -23,10 +23,12 @@ export function methodBuilder(method: number) {
         var search:  URLSearchParams = createQuery(pQuery, args);
         var headers: Headers         = createHeaders(pHeader, descriptor, this.getDefaultHeaders(), args);
 
+        console.log("Descriptor");
+        console.log(descriptor);
         // Request options
         var options = new RequestOptions({
           method,
-          url: this.getBaseUrl() + resUrl,
+          url: (descriptor.SpecialBaseUrl || this.getBaseUrl()) + resUrl,
           headers,
           body,
           search

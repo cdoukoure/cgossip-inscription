@@ -194,6 +194,7 @@ export function reducer(state = initialState, actions: Actions): State {
     case ActionTypes.DO_LOGOUT_SUCCESS: {
       if (localStorage.getItem('jwtoken')) localStorage.removeItem('jwtoken');
       if (localStorage.getItem('userInfo')) localStorage.removeItem('userInfo');
+      if (localStorage.getItem('currentRoute')) localStorage.removeItem('currentRoute');
       return Object.assign({}, state, initialState);
       // return {...state, ...initialState};
     }

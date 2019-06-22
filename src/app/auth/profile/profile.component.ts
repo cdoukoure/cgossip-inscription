@@ -19,10 +19,12 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    
   }
 
-  clearAvatarUrl() {
-    this.sandBox.formStateSetValue("PROFILE_EDIT_FORM.profile.avatar","");
+  onMediaChange($event) {
+    // console.log($event);
+    this.sandBox.formStateSetValue("PROFILE_EDIT_FORM.profile.avatar", $event.ressource);
   }
 
   onFileChange($event) {

@@ -23,7 +23,7 @@ export class CustomRouterStateSerializer
 
     console.log("RouterStateSerializer url: " + url)
 
-    if (url !== "/login" && url !== "/logout" && url !== "/first-login" && url.includes("/list"))
+    if (url.includes("/list"))
       localStorage.setItem('currentRoute', url);
 
     return { url, queryParams };

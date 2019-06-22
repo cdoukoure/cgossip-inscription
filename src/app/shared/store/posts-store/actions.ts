@@ -1,5 +1,5 @@
 import { 
-  Post
+  Post, LoadItems
 } from '@shared/models';
 
 import { type, ActionWithPayload }   from '@shared/utility';
@@ -42,15 +42,13 @@ export const ActionTypes = {
  */
 export class LoadPostsAction implements ActionWithPayload {
   readonly type = ActionTypes.LOAD_ITEMS;
-  constructor(public payload: any = null) {
-    console.log("Dispatch LoadPostsAction");
-  }
-} // api: admin/posts
+  constructor(public payload: any = null) {}
+}
 
 export class LoadPostsSuccessAction implements ActionWithPayload {
   readonly type = ActionTypes.LOAD_ITEMS_SUCCESS;
   constructor(public payload: {  items: Post[] }) {}
-} // api: 
+}
 
 export class LoadPostsFailAction implements ActionWithPayload {
   readonly type = ActionTypes.LOAD_ITEMS_FAIL;

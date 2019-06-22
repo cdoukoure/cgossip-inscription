@@ -43,6 +43,8 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { WebsiteLayoutComponent } from '@shared/layout/website/website-layout/website-layout.component';
 import { AdminLayoutComponent as CreativeTimAngularAdminLayout } from '@shared/layout/creativetim-theme/admin-layout/admin-layout.component';
 
+import { ComponentsModule } from '@app/shared/components/components.module';
+
 // Module feature components
 import { LoginComponent } from './login/login.component'
 import { RegisterComponent } from './register/register.component'
@@ -122,7 +124,9 @@ const routes: Routes = [
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+
+    ComponentsModule
   ],
   exports: [TranslatePipe],
   providers: [TranslateModule]

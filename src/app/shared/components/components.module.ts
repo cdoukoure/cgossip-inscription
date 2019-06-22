@@ -30,6 +30,8 @@ import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { PostCommentComponent } from './post-comment/post-comment.component';
 import { PostCommentListComponent } from './post-comment-list/post-comment-list.component';
 import { AdvancedTableComponent } from './advanced-table/advanced-table.component';
+import { RessourceComponent } from './ressource/ressource.component';
+import { PostCardListComponent } from './post-card-list/post-card-list.component';
 
 @NgModule({
   imports: [
@@ -59,9 +61,12 @@ import { AdvancedTableComponent } from './advanced-table/advanced-table.componen
     PostCommentComponent,
     PostCommentListComponent,
     AdvancedTableComponent,
+    RessourceComponent,
+    PostCardListComponent,
   ],
   exports: [
     PostCardComponent,
+    RessourceComponent,
     PostCommentComponent,
     PostCommentListComponent,
   ]

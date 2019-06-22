@@ -1,86 +1,61 @@
 <div class="main-content">
     <div class="container-fluid">
-            <div class="row">
-                    <div class="col-lg-12">
-                        <button mat-raised-button type="button" matTooltip="Edit Task" [matTooltipPosition]="'above'"
-                            class="btn btn-primary"
-                            (click)="createNews()"
-                            >
-                            <i class="material-icons">edit</i>&nbsp;Créer une nouvelle
-                        </button>
-                        <br />
-                        <hr />
+        <!--<div class="row">
+            <div class="col-md-6">
+                <div class="post">
+                    <div class="overlay"></div>
+                    <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+                        <source src="https://storage.googleapis.com/coverr-main/mp4/Mt_Baker.mp4" type="video/mp4">
+                    </video>
+                    <div class="container h-100 p-3">
+                        <div class="d-flex h-100">
+                            <div class="w-100 h-100 text-white">
+                                <div class="align-self-start">
+                                    <img class="img rounded-circle" src="author.avatar" />
+                                    <span>Jean-Charles Doukouré</span>
+                                </div>
+                                <div class="position-absolute mb-0 b-0">
+                                    <h1 class="display-3 post-title">Video Header</h1>
+                                    <p>With HTML5 Video and Bootstrap 4</p>
+                                </div>   
+                            </div>
+                        </div>
                     </div>
                 </div>
-<!--                 <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">content_copy</i>
+                <br/><br/><br/><br/>
+
+            </div>
+            <div class="col-md-6">
+                <div class="card-body">
+                    <cdk-virtual-scroll-viewport [itemSize]="1" style="min-height: 600px;width:100%;">
+
+                        <div *cdkVirtualFor="let item of sandBox.draftItems$ | async">
+                            <post-card [largeFormat]="true" [item]="item"
+                                [author]="(sandBox.userEntities$ | async)[item.author]"
+                                (onClick)="onPostAction($event)">
+                            </post-card>
                         </div>
-                        <p class="card-category">Used Space</p>
-                        <h3 class="card-title">49/50
-                            <small>GB</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons text-danger">warning</i>
-                            <a href="#pablo">Get More Space...</a>
+
+                        <div class="col-md-8 offset-md-2" *ngIf="sandBox.isLoading$ | async">
+                            <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
+                            </mat-progress-bar>
                         </div>
-                    </div>
+
+                    </cdk-virtual-scroll-viewport>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">store</i>
-                        </div>
-                        <p class="card-category">Revenue</p>
-                        <h3 class="card-title">$34,245</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i> Last 24 Hours
-                        </div>
-                    </div>
-                </div>
+        </div>-->
+        <div class="row">
+            <div class="col-lg-12">
+                <button mat-raised-button type="button"
+                    class="btn btn-primary" (click)="createNews()">
+                    <i class="material-icons">edit</i>&nbsp;Créer une nouvelle
+                </button>
+                <br />
+                <hr />
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-danger card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">info_outline</i>
-                        </div>
-                        <p class="card-category">Fixed Issues</p>
-                        <h3 class="card-title">75</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">local_offer</i> Tracked from Github
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon">
-                            <i class="fa fa-twitter"></i>
-                        </div>
-                        <p class="card-category">Followers</p>
-                        <h3 class="card-title">+245</h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">update</i> Just Updated
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
+        </div>
+
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <div class="card card-plain">
@@ -101,10 +76,17 @@
                                     (onClick)="onPostAction($event)">
                                 </post-card>
                             </div>
+
                             <div class="col-md-8 offset-md-2" *ngIf="sandBox.isLoading$ | async">
                                 <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
                                 </mat-progress-bar>
                             </div>
+                            <!-- <div class="col-md-8 offset-md-2 text-center">
+                                <button mat-raised-button type="button" (click)="onListMore('waiting')"
+                                    class="btn btn-primary btn-round btn-just-icon pull-right">
+                                    <i class="material-icons">add</i>
+                                </button>
+                            </div> -->
                         </cdk-virtual-scroll-viewport>
                     </div>
                 </div>
@@ -117,7 +99,7 @@
                                 <span class="nav-tabs-title">{{'News déjà traitées'}}</span>
                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                     <li class="nav-item">
-                                        <a mat-button class="nav-link active" href="#validated" data-toggle="tab">
+                                        <a at-button class="nav-link active" href="#validated" data-toggle="tab">
                                             <i class="material-icons">thumb_up</i> {{'En cours'}}
                                             <div class="ripple-container"></div>
                                         </a>
@@ -145,6 +127,12 @@
                                         <mat-progress-bar matBar color="warn" mode="indeterminate" value="50">
                                         </mat-progress-bar>
                                     </div>
+                                    <!-- <div class="col-md-8 offset-md-2 text-center">
+                                        <button mat-raised-button type="button" (click)="onListMore('validated')"
+                                            class="btn btn-primary btn-round btn-just-icon pull-right">
+                                            <i class="material-icons">add</i>
+                                        </button>
+                                    </div> -->
                                 </cdk-virtual-scroll-viewport>
                             </div>
                             <div class="tab-pane" id="refused">
@@ -154,6 +142,12 @@
                                             (onClick)="onPostAction($event)">
                                         </post-card>
                                     </div>
+                                    <!-- <div class="col-md-8 offset-md-2 text-center">
+                                        <button mat-raised-button type="button" (click)="onListMore('refused')"
+                                            class="btn btn-primary btn-round btn-just-icon pull-right">
+                                            <i class="material-icons">add</i>
+                                        </button>
+                                    </div> -->
                                 </cdk-virtual-scroll-viewport>
                             </div>
                         </div>

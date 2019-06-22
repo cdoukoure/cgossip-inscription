@@ -12,6 +12,7 @@ import { Router }           from '@angular/router';
 import { fadeInAnimation, moveIn } from '@shared/animations';
 
 import { PostsSandbox }  from '../posts.sandbox';
+import { LoadItems } from '@app/shared/models';
 
 
 @Component({
@@ -23,15 +24,15 @@ import { PostsSandbox }  from '../posts.sandbox';
 })
 export class ListComponent implements OnInit, OnDestroy, AfterViewInit  {
 
-  pageSize: number = 2;
-  pageIndex: number = 0;
+  filter: any = null;
+  psize: number = 3;
+  pindex: number = 0;
+  sort: any = null;
 
   constructor(
-    private router: Router,
+    // private router: Router,
     public sandBox: PostsSandbox
-  ) {
-    
-  }
+  ) { }
 
   private subscriptions: Array<Subscription> = [];
 
@@ -40,8 +41,6 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit  {
     this.sandBox.loadItems();
 
     this.registerEvents();
-
-    // setTimeout(()=>{}, 0);
 
   }
 
@@ -60,12 +59,10 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit  {
   /**
    * Subscribes to events
    */
-  private registerEvents(): void {
-      
+  private registerEvents(): void {      
     /* 
-    this.subscriptions.push( ); 
-    */
-    
+      this.subscriptions.push( ); 
+    */    
   }
 
   /**
@@ -74,7 +71,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit  {
    * @param selected
    */
   public onPostAction(event): void {
-    console.log(event)
+    // console.log(event)
     if (event.action === "getItem") {
       this.sandBox.getItem(event.id);
     } else {
@@ -83,7 +80,7 @@ export class ListComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
   public onListMore() {
-    this.pageSize = this.pageSize + 2;
+    // this.pageSize = this.pageSize + 2;
   }
 
 }

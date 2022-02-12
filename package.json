@@ -52,7 +52,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "@toverux/ngx-sweetalert2": "^4.0.0",
     "@types/moment": "^2.13.0",
-    "ajv": "6.4.0",
+    "ajv": "6.12.3",
     "angular2-notifications": "^2.0.0",
     "arrive": "2.4.1",
     "bootstrap": "4.1.0",
